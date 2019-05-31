@@ -1,0 +1,39 @@
+package com.sulongfei.jump.web.controller;
+
+import com.sulongfei.jump.dto.ClubDTO;
+import com.sulongfei.jump.response.Response;
+import com.sulongfei.jump.service.ClubService;
+import com.sulongfei.jump.service.impl.ClubServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * 〈〉
+ *
+ * @Author sulongfei
+ * @Date 2019/5/24 16:16
+ * @Version 1.0
+ */
+@RestController
+@RequestMapping("/admin/club")
+public class ClubController {
+    @Autowired
+    private ClubService clubService;
+
+    @PostMapping("/local/list")
+    public Response localClubList(ClubDTO dto) {
+        return clubService.localClubList(dto);
+    }
+
+    @PostMapping("/local/all")
+    public Response localClubAll() {
+        return clubService.localClubAll();
+    }
+
+    @PostMapping("/synchronize")
+    public Response synchronizeClubList() {
+        return clubService.synchronizeClubList();
+    }
+}

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sulongfei.jump.mapper.MenuMapper">
+  <resultMap id="BaseResultMap" type="com.sulongfei.jump.model.Menu">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
+    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+    <result column="menu_type" jdbcType="INTEGER" property="menuType" />
+    <result column="sequence" jdbcType="INTEGER" property="sequence" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="hidden" jdbcType="BIT" property="hidden" />
+    <result column="component" jdbcType="VARCHAR" property="component" />
+    <result column="redirect" jdbcType="VARCHAR" property="redirect" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, parent_id, name, permission, permission_name, menu_type, sequence, path, hidden, 
+    component, redirect, icon
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from menu
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from menu
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.sulongfei.jump.model.Menu">
+    insert into menu (id, parent_id, name, 
+      permission, permission_name, menu_type, 
+      sequence, path, hidden, 
+      component, redirect, icon
+      )
+    values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{permission,jdbcType=VARCHAR}, #{permissionName,jdbcType=VARCHAR}, #{menuType,jdbcType=INTEGER}, 
+      #{sequence,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{hidden,jdbcType=BIT}, 
+      #{component,jdbcType=VARCHAR}, #{redirect,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sulongfei.jump.model.Menu">
+    insert into menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="permission != null">
+        permission,
+      </if>
+      <if test="permissionName != null">
+        permission_name,
+      </if>
+      <if test="menuType != null">
+        menu_type,
+      </if>
+      <if test="sequence != null">
+        sequence,
+      </if>
+      <if test="path != null">
+        path,
+      </if>
+      <if test="hidden != null">
+        hidden,
+      </if>
+      <if test="component != null">
+        component,
+      </if>
+      <if test="redirect != null">
+        redirect,
+      </if>
+      <if test="icon != null">
+        icon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionName != null">
+        #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuType != null">
+        #{menuType,jdbcType=INTEGER},
+      </if>
+      <if test="sequence != null">
+        #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="hidden != null">
+        #{hidden,jdbcType=BIT},
+      </if>
+      <if test="component != null">
+        #{component,jdbcType=VARCHAR},
+      </if>
+      <if test="redirect != null">
+        #{redirect,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sulongfei.jump.model.Menu">
+    update menu
+    <set>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        permission = #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionName != null">
+        permission_name = #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuType != null">
+        menu_type = #{menuType,jdbcType=INTEGER},
+      </if>
+      <if test="sequence != null">
+        sequence = #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="path != null">
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="hidden != null">
+        hidden = #{hidden,jdbcType=BIT},
+      </if>
+      <if test="component != null">
+        component = #{component,jdbcType=VARCHAR},
+      </if>
+      <if test="redirect != null">
+        redirect = #{redirect,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sulongfei.jump.model.Menu">
+    update menu
+    set parent_id = #{parentId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      permission = #{permission,jdbcType=VARCHAR},
+      permission_name = #{permissionName,jdbcType=VARCHAR},
+      menu_type = #{menuType,jdbcType=INTEGER},
+      sequence = #{sequence,jdbcType=INTEGER},
+      path = #{path,jdbcType=VARCHAR},
+      hidden = #{hidden,jdbcType=BIT},
+      component = #{component,jdbcType=VARCHAR},
+      redirect = #{redirect,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <sql id="All_Column_BY_ALIAS">
+    SELECT
+        m.id,
+        m.name,
+        m.sequence,
+        m.parent_id,
+        m.path,
+        m.hidden,
+        m.component,
+        m.redirect,
+        m.icon,
+        m.menu_type,
+        m.permission,
+        m.permission_name
+  </sql>
+
+  <select id="selectMenuBySysUserId" resultMap="BaseResultMap">
+    <include refid="All_Column_BY_ALIAS"/>
+    FROM
+    role_menu rm,
+    menu m,
+    role r,
+    sys_user su,
+    sys_role sr
+    WHERE
+    rm.menu_id = m.id
+    AND rm.role_id = r.id
+    AND sr.role_id = r.id
+    AND sr.sys_user_id = su.id
+    AND su.id = #{sysUserId, jdbcType=BIGINT} ORDER BY m.id ASC, m.sequence ASC;
+  </select>
+</mapper>

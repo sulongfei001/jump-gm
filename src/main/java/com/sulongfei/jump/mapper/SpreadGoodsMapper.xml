@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sulongfei.jump.mapper.SpreadGoodsMapper">
+    <resultMap id="BaseResultMap" type="com.sulongfei.jump.model.SpreadGoods">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="remote_club_id" jdbcType="BIGINT" property="remoteClubId"/>
+        <result column="remote_goods_id" jdbcType="BIGINT" property="remoteGoodsId"/>
+        <result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+        <result column="goods_num" jdbcType="INTEGER" property="goodsNum"/>
+        <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice"/>
+        <result column="goods_picture" jdbcType="VARCHAR" property="goodsPicture"/>
+        <result column="goods_text" jdbcType="VARCHAR" property="goodsText"/>
+        <result column="prize_probability" jdbcType="INTEGER" property="prizeProbability"/>
+        <result column="premium_proportion" jdbcType="INTEGER" property="premiumProportion"/>
+        <result column="picture1" jdbcType="VARCHAR" property="picture1"/>
+        <result column="picture2" jdbcType="VARCHAR" property="picture2"/>
+        <result column="picture3" jdbcType="VARCHAR" property="picture3"/>
+        <result column="picture4" jdbcType="VARCHAR" property="picture4"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, remote_club_id, remote_goods_id, goods_name, goods_num, goods_price, goods_picture, 
+    goods_text, prize_probability, premium_proportion, picture1, picture2, picture3, 
+    picture4
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from spread_goods
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from spread_goods
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.sulongfei.jump.model.SpreadGoods">
+    insert into spread_goods (id, remote_club_id, remote_goods_id, 
+      goods_name, goods_num, goods_price, 
+      goods_picture, goods_text, prize_probability, 
+      premium_proportion, picture1, picture2, 
+      picture3, picture4)
+    values (#{id,jdbcType=BIGINT}, #{remoteClubId,jdbcType=BIGINT}, #{remoteGoodsId,jdbcType=BIGINT}, 
+      #{goodsName,jdbcType=VARCHAR}, #{goodsNum,jdbcType=INTEGER}, #{goodsPrice,jdbcType=DECIMAL}, 
+      #{goodsPicture,jdbcType=VARCHAR}, #{goodsText,jdbcType=VARCHAR}, #{prizeProbability,jdbcType=INTEGER}, 
+      #{premiumProportion,jdbcType=INTEGER}, #{picture1,jdbcType=VARCHAR}, #{picture2,jdbcType=VARCHAR}, 
+      #{picture3,jdbcType=VARCHAR}, #{picture4,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.sulongfei.jump.model.SpreadGoods">
+        insert into spread_goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="remoteClubId != null">
+                remote_club_id,
+            </if>
+            <if test="remoteGoodsId != null">
+                remote_goods_id,
+            </if>
+            <if test="goodsName != null">
+                goods_name,
+            </if>
+            <if test="goodsNum != null">
+                goods_num,
+            </if>
+            <if test="goodsPrice != null">
+                goods_price,
+            </if>
+            <if test="goodsPicture != null">
+                goods_picture,
+            </if>
+            <if test="goodsText != null">
+                goods_text,
+            </if>
+            <if test="prizeProbability != null">
+                prize_probability,
+            </if>
+            <if test="premiumProportion != null">
+                premium_proportion,
+            </if>
+            <if test="picture1 != null">
+                picture1,
+            </if>
+            <if test="picture2 != null">
+                picture2,
+            </if>
+            <if test="picture3 != null">
+                picture3,
+            </if>
+            <if test="picture4 != null">
+                picture4,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="remoteClubId != null">
+                #{remoteClubId,jdbcType=BIGINT},
+            </if>
+            <if test="remoteGoodsId != null">
+                #{remoteGoodsId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsName != null">
+                #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsNum != null">
+                #{goodsNum,jdbcType=INTEGER},
+            </if>
+            <if test="goodsPrice != null">
+                #{goodsPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsPicture != null">
+                #{goodsPicture,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsText != null">
+                #{goodsText,jdbcType=VARCHAR},
+            </if>
+            <if test="prizeProbability != null">
+                #{prizeProbability,jdbcType=INTEGER},
+            </if>
+            <if test="premiumProportion != null">
+                #{premiumProportion,jdbcType=INTEGER},
+            </if>
+            <if test="picture1 != null">
+                #{picture1,jdbcType=VARCHAR},
+            </if>
+            <if test="picture2 != null">
+                #{picture2,jdbcType=VARCHAR},
+            </if>
+            <if test="picture3 != null">
+                #{picture3,jdbcType=VARCHAR},
+            </if>
+            <if test="picture4 != null">
+                #{picture4,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.sulongfei.jump.model.SpreadGoods">
+        update spread_goods
+        <set>
+            <if test="remoteClubId != null">
+                remote_club_id = #{remoteClubId,jdbcType=BIGINT},
+            </if>
+            <if test="remoteGoodsId != null">
+                remote_goods_id = #{remoteGoodsId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsName != null">
+                goods_name = #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsNum != null">
+                goods_num = #{goodsNum,jdbcType=INTEGER},
+            </if>
+            <if test="goodsPrice != null">
+                goods_price = #{goodsPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsPicture != null">
+                goods_picture = #{goodsPicture,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsText != null">
+                goods_text = #{goodsText,jdbcType=VARCHAR},
+            </if>
+            <if test="prizeProbability != null">
+                prize_probability = #{prizeProbability,jdbcType=INTEGER},
+            </if>
+            <if test="premiumProportion != null">
+                premium_proportion = #{premiumProportion,jdbcType=INTEGER},
+            </if>
+            <if test="picture1 != null">
+                picture1 = #{picture1,jdbcType=VARCHAR},
+            </if>
+            <if test="picture2 != null">
+                picture2 = #{picture2,jdbcType=VARCHAR},
+            </if>
+            <if test="picture3 != null">
+                picture3 = #{picture3,jdbcType=VARCHAR},
+            </if>
+            <if test="picture4 != null">
+                picture4 = #{picture4,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.sulongfei.jump.model.SpreadGoods">
+    update spread_goods
+    set remote_club_id = #{remoteClubId,jdbcType=BIGINT},
+      remote_goods_id = #{remoteGoodsId,jdbcType=BIGINT},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_num = #{goodsNum,jdbcType=INTEGER},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      goods_picture = #{goodsPicture,jdbcType=VARCHAR},
+      goods_text = #{goodsText,jdbcType=VARCHAR},
+      prize_probability = #{prizeProbability,jdbcType=INTEGER},
+      premium_proportion = #{premiumProportion,jdbcType=INTEGER},
+      picture1 = #{picture1,jdbcType=VARCHAR},
+      picture2 = #{picture2,jdbcType=VARCHAR},
+      picture3 = #{picture3,jdbcType=VARCHAR},
+      picture4 = #{picture4,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="queryList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from spread_goods
+        <where>
+            <if test="remoteClubId != null">
+                and remote_club_id = #{remoteClubId,jdbcType=BIGINT}
+            </if>
+            <if test="goodsName != null">
+                and goods_name like concat('%',#{goodsName,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </select>
+</mapper>
