@@ -41,9 +41,9 @@ public class RoomDTO extends BaseDTO {
 
     private Integer ticketNum;
 
-    private BigDecimal prizeProbability;
+    private Integer prizeProbability;
 
-    private BigDecimal premiumProportion;
+    private Integer premiumProportion;
 
     private String picture1;
 

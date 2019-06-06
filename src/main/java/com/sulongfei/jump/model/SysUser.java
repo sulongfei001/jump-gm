@@ -8,6 +8,8 @@ import lombok.EqualsAndHashCode;
 public class SysUser extends Model {
     private static final long serialVersionUID = 479725769209354278L;
 
+    private Long id;
+
     private String sysName;
 
     private String username;

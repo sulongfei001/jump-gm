@@ -25,4 +25,6 @@ public interface GoodsMapper {
     List<Goods> queryList(@Param("remoteClubId") Long remoteClubId);
 
     List<Goods> selectByClubId(@Param("remoteClubId") Long remoteClubId);
+
+    Goods selectByRemoteGoodsId(@Param("goodsId") Long goodsId);
 }

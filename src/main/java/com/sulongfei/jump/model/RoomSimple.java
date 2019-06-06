@@ -1,13 +1,16 @@
 package com.sulongfei.jump.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Date;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class RoomSimple extends Model {
+
+    private Long id;
 
     private Long remoteClubId;
 
@@ -31,9 +34,13 @@ public class RoomSimple extends Model {
 
     private Integer ticketNum;
 
-    private BigDecimal prizeProbability;
+    private Integer prizeProbability;
 
-    private BigDecimal premiumProportion;
+    private Integer premiumProportion;
+
+    private Integer consumeNum;
+
+    private Boolean randomOn;
 
     private String picture1;
 

@@ -14,6 +14,8 @@ public class Menu extends Model {
 
     private static final long serialVersionUID = -643219688245770663L;
 
+    private Long id;
+
     private Long parentId;
 
     private Integer sequence;

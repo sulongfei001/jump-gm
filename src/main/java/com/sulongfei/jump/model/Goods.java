@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 @Data
 public class Goods extends Model {
 
+    private Long id;
+
     private Long remoteGoodsId;
 
     private Long remoteClubId;
@@ -21,6 +23,8 @@ public class Goods extends Model {
 
     private String goodsPicture;
 
-    private String goodsText;
+    private String detailPicture;
+
+    private Integer remainNum;
 
 }

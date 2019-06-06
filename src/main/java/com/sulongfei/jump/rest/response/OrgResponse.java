@@ -1,25 +1,18 @@
-package com.sulongfei.jump.response;
+package com.sulongfei.jump.rest.response;
 
 import lombok.Data;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * 〈〉
  *
  * @Author sulongfei
- * @Date 2019/5/24 16:22
+ * @Date 2019/6/5 11:26
  * @Version 1.0
  */
 @Data
-public class ClubRes implements Serializable {
-
-    private static final long serialVersionUID = 7363552638274078748L;
-
-    private Long id;
-
-    private Long remoteClubId;
+public class OrgResponse {
 
     private Long supplierId;
 
@@ -31,11 +24,13 @@ public class ClubRes implements Serializable {
 
     private String phone;
 
+    private Long orgId;
+
     private Byte isOrg;
 
     private Byte status;
 
-    private Timestamp createTime;
+    private Timestamp create_time;
 
     private Timestamp lastUpdateTime;
 

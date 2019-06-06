@@ -6,7 +6,6 @@ import lombok.ToString;
 
 import java.io.Serializable;
 
-@EqualsAndHashCode
 @Data
 public class BaseDTO implements Serializable {
 

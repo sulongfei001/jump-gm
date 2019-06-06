@@ -1,9 +1,15 @@
 package com.sulongfei.jump.mapper;
 
 import com.sulongfei.jump.model.Club;
+import org.apache.ibatis.annotations.CacheNamespace;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
+@Mapper
 public interface ClubMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -20,4 +26,6 @@ public interface ClubMapper {
     List<Club> selectAll();
 
     List<Club> queryList();
+
+    Club selectByOrgId(@Param("orgId") Long orgId);
 }

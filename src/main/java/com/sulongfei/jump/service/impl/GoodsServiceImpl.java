@@ -3,6 +3,8 @@ package com.sulongfei.jump.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
+import com.sulongfei.jump.constants.Constants;
+import com.sulongfei.jump.constants.ResponseStatus;
 import com.sulongfei.jump.dto.GoodsDTO;
 import com.sulongfei.jump.mapper.GoodsMapper;
 import com.sulongfei.jump.mapper.SpreadGoodsMapper;
@@ -11,9 +13,15 @@ import com.sulongfei.jump.model.SpreadGoods;
 import com.sulongfei.jump.response.GoodsRes;
 import com.sulongfei.jump.response.Response;
 import com.sulongfei.jump.response.SpreadGoodsRes;
+import com.sulongfei.jump.rest.response.GoodsResponse;
+import com.sulongfei.jump.rest.response.RestResponse;
 import com.sulongfei.jump.service.GoodsService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,29 +40,31 @@ import java.util.List;
 public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
+    private RestService restService;
+
+    @Autowired
     private GoodsMapper goodsMapper;
 
     @Autowired
     private SpreadGoodsMapper spreadGoodsMapper;
 
-    @Override
-    public Response synchronizeGoodsList() {
-        return new Response();
-    }
+    private final String CACHE_KEY = "goodsCache:";
 
     @Override
     @Transactional(readOnly = false)
+    @CacheEvict(value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY, allEntries = true)
     public Response createSpreadGoods(GoodsDTO goodsDTO) {
         SpreadGoods spreadGoods = new SpreadGoods();
-        BeanUtils.copyProperties(goodsDTO,spreadGoods);
+        BeanUtils.copyProperties(goodsDTO, spreadGoods);
         spreadGoodsMapper.insertSelective(spreadGoods);
         return new Response();
     }
 
     @Override
+    @Cacheable(key = "#root.caches[0].name+'goods.spread.list_'+#goodsDTO.page+'_'+#goodsDTO.pageSize", value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY)
     public Response spreadGoodsList(GoodsDTO goodsDTO) {
         PageHelper.startPage(goodsDTO.getPage(), goodsDTO.getPageSize());
-        List<SpreadGoods> list = spreadGoodsMapper.queryList(goodsDTO.getRemoteClubId(),goodsDTO.getGoodsName());
+        List<SpreadGoods> list = spreadGoodsMapper.queryList(goodsDTO.getRemoteClubId(), goodsDTO.getGoodsName());
         List<SpreadGoodsRes> data = Lists.newArrayList();
         list.forEach(spreadGoods -> {
             SpreadGoodsRes spreadGoodsRes = new SpreadGoodsRes();
@@ -65,6 +75,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
+    @Cacheable(key = "#root.caches[0].name+'goods.local.list_'+#goodsDTO.page+'_'+#goodsDTO.pageSize", value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY)
     public Response localGoodsList(GoodsDTO goodsDTO) {
         PageHelper.startPage(goodsDTO.getPage(), goodsDTO.getPageSize());
         List<Goods> list = goodsMapper.queryList(goodsDTO.getRemoteClubId());
@@ -78,6 +89,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
+    @Cacheable(key = "#root.caches[0].name+'goods.local.all_'+#goodsDTO.remoteClubId", value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY)
     public Response localGoodsAll(GoodsDTO goodsDTO) {
         List<Goods> list = goodsMapper.selectByClubId(goodsDTO.getRemoteClubId());
         List<GoodsRes> data = Lists.newArrayList();
@@ -90,6 +102,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
+    @Cacheable(key = "#root.caches[0].name+'goods.spread.'+#id", value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY)
     public Response getSpreadGoods(long id) {
         SpreadGoods spreadGoods = spreadGoodsMapper.selectByPrimaryKey(id);
         SpreadGoodsRes data = new SpreadGoodsRes();
@@ -99,10 +112,64 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     @Transactional(readOnly = false)
+    @CacheEvict(value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY, allEntries = true)
     public Response updateSpreadGoods(GoodsDTO dto) {
         SpreadGoods spreadGoods = new SpreadGoods();
         BeanUtils.copyProperties(dto, spreadGoods);
         spreadGoodsMapper.updateByPrimaryKeySelective(spreadGoods);
         return new Response();
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    @CacheEvict(value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY, allEntries = true)
+    public Response synchronizeGoodsList() {
+        ResponseEntity<RestResponse<List<GoodsResponse>>> res = restService.getGoodsList(null);
+        if (!HttpStatus.OK.equals(res.getStatusCode()) || !"200".equals(res.getBody().getErrorCode())) {
+            return new Response(ResponseStatus.SYNCHR_FAILURE);
+        }
+        for (GoodsResponse response : res.getBody().getResult()) {
+            Goods goods = goodsMapper.selectByRemoteGoodsId(response.getGoodsId());
+            if (goods != null) {
+                // 更新
+                if (compare(response, goods)) {
+                    continue;
+                }
+                toGoods(response, goods);
+                goodsMapper.updateByPrimaryKey(goods);
+            } else {
+                goods = new Goods();
+                toGoods(response, goods);
+                goods.setRemainNum(response.getStockNum());
+                goodsMapper.insertSelective(goods);
+            }
+        }
+        return new Response();
+    }
+
+    private Goods toGoods(GoodsResponse res, Goods goods) {
+        goods.setRemoteGoodsId(res.getGoodsId());
+        goods.setRemoteClubId(res.getOrgId());
+        goods.setGoodsName(res.getName());
+        goods.setGoodsNum(res.getStockNum());
+        goods.setGoodsPrice(res.getPrice());
+        goods.setGoodsPicture(res.getLogo());
+        goods.setDetailPicture(res.getDetailLogo());
+        return goods;
+    }
+
+    private Boolean compare(GoodsResponse res, Goods goods) {
+        if (res.getGoodsId().equals(goods.getRemoteGoodsId()) &&
+                res.getOrgId().equals(goods.getRemoteClubId()) &&
+                res.getName().equals(goods.getGoodsName()) &&
+                res.getLogo().equals(goods.getGoodsPicture()) &&
+                res.getDetailLogo().equals(goods.getDetailPicture()) &&
+                res.getStockNum().equals(goods.getGoodsNum()) &&
+                res.getPrice().compareTo(goods.getGoodsPrice()) == 0
+        ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

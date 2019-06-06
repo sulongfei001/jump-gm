@@ -31,6 +31,8 @@ public class GoodsRes implements Serializable {
 
     private String goodsPicture;
 
-    private String goodsText;
+    private String detailPicture;
+
+    private Integer remainNum;
 
 }

@@ -2,6 +2,7 @@ package com.sulongfei.jump.service.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.sulongfei.jump.constants.Constants;
 import com.sulongfei.jump.mapper.MenuMapper;
 import com.sulongfei.jump.model.Menu;
 import com.sulongfei.jump.model.SysUser;
@@ -11,6 +12,7 @@ import com.sulongfei.jump.service.SysUserService;
 import com.sulongfei.jump.utils.PrincipalUtils;
 import com.sulongfei.jump.web.interceptor.UserInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -32,7 +34,10 @@ public class SysUserServiceImpl implements SysUserService {
     @Autowired
     private MenuMapper menuMapper;
 
+    private final String CACHE_KEY = "sysUser:";
+
     @Override
+    //@Cacheable(key = "#root.caches[0].name+'info.permission'", value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY)
     public Response<SysUserRes> sysUserInfo() {
         Response<SysUserRes> response = new Response<>();
 

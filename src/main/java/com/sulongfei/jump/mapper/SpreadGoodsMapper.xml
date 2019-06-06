@@ -198,6 +198,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
+    <cache type="com.sulongfei.jump.config.MybatisRedisCache"/>
     <select id="queryList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

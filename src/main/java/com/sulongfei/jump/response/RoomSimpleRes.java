@@ -4,7 +4,6 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * 〈〉
@@ -41,9 +40,9 @@ public class RoomSimpleRes {
 
     private Integer ticketNum;
 
-    private BigDecimal prizeProbability;
+    private Integer prizeProbability;
 
-    private BigDecimal premiumProportion;
+    private Integer premiumProportion;
 
     private String picture1;
 

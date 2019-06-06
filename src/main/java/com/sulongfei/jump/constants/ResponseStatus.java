@@ -55,5 +55,7 @@ public interface ResponseStatus {
 
     String PUBLISH_COUPON_PHONE_IS_BLANK = "发送优惠券手机号码为空";
 
+    String SYNCHR_FAILURE = "数据同步失败";
+
 
 }
