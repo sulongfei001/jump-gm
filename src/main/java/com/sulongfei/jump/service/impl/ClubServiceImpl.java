@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -110,16 +111,16 @@ public class ClubServiceImpl implements ClubService {
     }
 
     private Boolean compare(OrgResponse org, Club club) {
-        if (org.getOrgId().equals(club.getRemoteClubId()) &&
-                org.getSupplierId().equals(club.getSupplierId()) &&
-                org.getSupplierName().equals(club.getSupplierName()) &&
-                org.getSupplierAddress().equals(club.getSupplierAddress()) &&
-                org.getCompanyName().equals(club.getCompanyName()) &&
-                org.getPhone().equals(club.getPhone()) &&
-                org.getIsOrg().equals(club.getIsOrg()) &&
-                org.getStatus().equals(club.getStatus()) &&
-                org.getCreate_time().equals(club.getCreateTime()) &&
-                org.getLastUpdateTime().equals(club.getLastUpdateTime())
+        if (!ObjectUtils.isEmpty(org.getOrgId()) && org.getOrgId().equals(club.getRemoteClubId()) &&
+                !ObjectUtils.isEmpty(org.getSupplierId()) && org.getSupplierId().equals(club.getSupplierId()) &&
+                !ObjectUtils.isEmpty(org.getSupplierName()) && org.getSupplierName().equals(club.getSupplierName()) &&
+                !ObjectUtils.isEmpty(org.getSupplierAddress()) && org.getSupplierAddress().equals(club.getSupplierAddress()) &&
+                !ObjectUtils.isEmpty(org.getCompanyName()) && org.getCompanyName().equals(club.getCompanyName()) &&
+                !ObjectUtils.isEmpty(org.getPhone()) && org.getPhone().equals(club.getPhone()) &&
+                !ObjectUtils.isEmpty(org.getIsOrg()) && org.getIsOrg().equals(club.getIsOrg()) &&
+                !ObjectUtils.isEmpty(org.getStatus()) && org.getStatus().equals(club.getStatus()) &&
+                !ObjectUtils.isEmpty(org.getCreate_time()) && org.getCreate_time().equals(club.getCreateTime()) &&
+                !ObjectUtils.isEmpty(org.getLastUpdateTime()) && org.getLastUpdateTime().equals(club.getLastUpdateTime())
         ) {
             return true;
         } else {

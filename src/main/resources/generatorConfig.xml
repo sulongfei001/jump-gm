@@ -23,7 +23,7 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://139.199.159.105:3306/club_jump?useSSL=false"
+                        connectionURL="jdbc:mysql://212.64.113.76:9000/club_jump?useSSL=false"
                         userId="root"
                         password="Sulongfei1234">
         </jdbcConnection>
@@ -81,11 +81,13 @@
         15，delimitAllColumns：设置是否所有生成的SQL中的列名都使用标识符引起来。默认为false，delimitIdentifiers参考context的属性
         注意，table里面很多参数都是对javaModelGenerator，context等元素的默认属性的一个复写；
      -->
-        <table tableName="goods"
-               domainObjectName="Goods"
+        <table tableName="rank_prize"
+               domainObjectName="RankPrize"
                enableDeleteByExample="false"
                enableCountByExample="false"
                enableUpdateByExample="false"
-               enableSelectByExample="false"/>
+               enableSelectByExample="false">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
     </context>
 </generatorConfiguration>

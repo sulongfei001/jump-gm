@@ -235,5 +235,5 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <cache type="com.sulongfei.jump.config.MybatisRedisCache"/>
+  <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
 </mapper>

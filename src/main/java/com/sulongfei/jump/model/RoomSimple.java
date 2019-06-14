@@ -40,8 +40,6 @@ public class RoomSimple extends Model {
 
     private Integer consumeNum;
 
-    private Boolean randomOn;
-
     private String picture1;
 
     private String picture2;

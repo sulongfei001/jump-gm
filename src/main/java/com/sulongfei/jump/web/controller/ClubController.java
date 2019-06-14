@@ -6,6 +6,7 @@ import com.sulongfei.jump.service.ClubService;
 import com.sulongfei.jump.service.impl.ClubServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +24,7 @@ public class ClubController {
     private ClubService clubService;
 
     @PostMapping("/local/list")
-    public Response localClubList(ClubDTO dto) {
+    public Response localClubList(@RequestBody ClubDTO dto) {
         return clubService.localClubList(dto);
     }
 

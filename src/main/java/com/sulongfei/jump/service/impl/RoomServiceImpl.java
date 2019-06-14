@@ -44,7 +44,6 @@ public class RoomServiceImpl implements RoomService {
         RoomSimple roomSimple = new RoomSimple();
         BeanUtils.copyProperties(dto, roomSimple);
         roomSimple.setConsumeNum(Integer.valueOf(Constants.Common.ZERO));
-        roomSimple.setRandomOn(Boolean.FALSE);
         roomSimple.setCreateTime(new Timestamp(System.currentTimeMillis()));
         roomSimpleMapper.insertSelective(roomSimple);
         return new Response();

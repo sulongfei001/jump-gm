@@ -25,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -61,7 +62,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    @Cacheable(key = "#root.caches[0].name+'goods.spread.list_'+#goodsDTO.page+'_'+#goodsDTO.pageSize", value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY)
+    @Cacheable(key = "#root.caches[0].name+'goods.spread.list_'+#goodsDTO", value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY)
     public Response spreadGoodsList(GoodsDTO goodsDTO) {
         PageHelper.startPage(goodsDTO.getPage(), goodsDTO.getPageSize());
         List<SpreadGoods> list = spreadGoodsMapper.queryList(goodsDTO.getRemoteClubId(), goodsDTO.getGoodsName());
@@ -75,7 +76,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    @Cacheable(key = "#root.caches[0].name+'goods.local.list_'+#goodsDTO.page+'_'+#goodsDTO.pageSize", value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY)
+    @Cacheable(key = "#root.caches[0].name+'goods.local.list_'+#goodsDTO", value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY)
     public Response localGoodsList(GoodsDTO goodsDTO) {
         PageHelper.startPage(goodsDTO.getPage(), goodsDTO.getPageSize());
         List<Goods> list = goodsMapper.queryList(goodsDTO.getRemoteClubId());
@@ -159,13 +160,13 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     private Boolean compare(GoodsResponse res, Goods goods) {
-        if (res.getGoodsId().equals(goods.getRemoteGoodsId()) &&
-                res.getOrgId().equals(goods.getRemoteClubId()) &&
-                res.getName().equals(goods.getGoodsName()) &&
-                res.getLogo().equals(goods.getGoodsPicture()) &&
-                res.getDetailLogo().equals(goods.getDetailPicture()) &&
-                res.getStockNum().equals(goods.getGoodsNum()) &&
-                res.getPrice().compareTo(goods.getGoodsPrice()) == 0
+        if (!ObjectUtils.isEmpty(res.getGoodsId()) && res.getGoodsId().equals(goods.getRemoteGoodsId()) &&
+                !ObjectUtils.isEmpty(res.getOrgId()) && res.getOrgId().equals(goods.getRemoteClubId()) &&
+                !ObjectUtils.isEmpty(res.getName()) && res.getName().equals(goods.getGoodsName()) &&
+                !ObjectUtils.isEmpty(res.getLogo()) && res.getLogo().equals(goods.getGoodsPicture()) &&
+                !ObjectUtils.isEmpty(res.getDetailLogo()) && res.getDetailLogo().equals(goods.getDetailPicture()) &&
+                !ObjectUtils.isEmpty(res.getStockNum()) && res.getStockNum().equals(goods.getGoodsNum()) &&
+                !ObjectUtils.isEmpty(res.getPrice()) && res.getPrice().compareTo(goods.getGoodsPrice()) == 0
         ) {
             return true;
         } else {

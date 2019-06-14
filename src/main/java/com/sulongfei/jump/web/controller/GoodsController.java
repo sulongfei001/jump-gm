@@ -20,12 +20,12 @@ public class GoodsController {
     private GoodsService goodsService;
 
     @PostMapping("/local/list")
-    public Response localGoodsList(GoodsDTO dto) {
+    public Response localGoodsList(@RequestBody GoodsDTO dto) {
         return goodsService.localGoodsList(dto);
     }
 
     @PostMapping("/local/all")
-    public Response localGoodsAll(GoodsDTO dto) {
+    public Response localGoodsAll(@RequestBody GoodsDTO dto) {
         return goodsService.localGoodsAll(dto);
     }
 
@@ -35,7 +35,7 @@ public class GoodsController {
     }
 
     @PostMapping("/spread/list")
-    public Response spreadGoodsList(GoodsDTO dto) {
+    public Response spreadGoodsList(@RequestBody GoodsDTO dto) {
         return goodsService.spreadGoodsList(dto);
     }
 
@@ -45,12 +45,12 @@ public class GoodsController {
     }
 
     @PostMapping("/spread/create")
-    public Response createSpreadGoods(GoodsDTO dto) {
+    public Response createSpreadGoods(@RequestBody GoodsDTO dto) {
         return goodsService.createSpreadGoods(dto);
     }
 
     @PutMapping("/spread/update")
-    public Response updateSpreadGoods(GoodsDTO dto) {
+    public Response updateSpreadGoods(@RequestBody GoodsDTO dto) {
         return goodsService.updateSpreadGoods(dto);
     }
 }

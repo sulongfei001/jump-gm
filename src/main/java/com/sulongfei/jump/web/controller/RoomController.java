@@ -20,12 +20,12 @@ public class RoomController {
     private RoomService roomService;
 
     @PostMapping("/simple/list")
-    public Response roomList(RoomDTO dto) {
+    public Response roomList(@RequestBody RoomDTO dto) {
         return roomService.simpleList(dto);
     }
 
     @PostMapping("/simple/create")
-    public Response createSimpleRoom(RoomDTO dto) {
+    public Response createSimpleRoom(@RequestBody RoomDTO dto) {
         return roomService.createSimpleRoom(dto);
     }
 
@@ -40,7 +40,7 @@ public class RoomController {
     }
 
     @PutMapping("/simple/update")
-    public Response updateSimpleRoom(RoomDTO dto){
+    public Response updateSimpleRoom(@RequestBody RoomDTO dto) {
         return roomService.updateSimpleRoom(dto);
     }
 }

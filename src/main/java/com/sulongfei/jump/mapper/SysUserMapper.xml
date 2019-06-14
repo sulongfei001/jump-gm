@@ -140,7 +140,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-    <cache type="com.sulongfei.jump.config.MybatisRedisCache"/>
+    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
     <select id="selectSysUserByUsername" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
