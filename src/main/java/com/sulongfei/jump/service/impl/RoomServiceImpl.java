@@ -50,7 +50,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    @Cacheable(key = "#root.caches[0].name+'room.simple.list_'+#roomDTO.page+'_'+#roomDTO.pageSize", value = Constants.RedisName.SERVICE_CACHE + SIMPLE_CACHE_KEY)
+    @Cacheable(key = "#root.caches[0].name+'room.simple.list_'+#roomDTO", value = Constants.RedisName.SERVICE_CACHE + SIMPLE_CACHE_KEY)
     public Response simpleList(RoomDTO roomDTO) {
         PageHelper.startPage(roomDTO.getPage(), roomDTO.getPageSize());
         List<RoomSimple> list = roomSimpleMapper.selectRoomSimple(roomDTO.getRemoteClubId());

@@ -44,7 +44,7 @@ public class ClubServiceImpl implements ClubService {
     private final String CACHE_KEY = "clubCache:";
 
     @Override
-    @Cacheable(key = "#root.caches[0].name+'club.list_'+#clubDTO.page+'_'+#clubDTO.pageSize", value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY)
+    @Cacheable(key = "#root.caches[0].name+'club.list_'+#clubDTO", value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY)
     public Response localClubList(ClubDTO clubDTO) {
         PageHelper.startPage(clubDTO.getPage(), clubDTO.getPageSize());
         List<Club> list = clubMapper.queryList();
