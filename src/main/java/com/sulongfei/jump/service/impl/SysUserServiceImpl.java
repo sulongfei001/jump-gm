@@ -34,10 +34,7 @@ public class SysUserServiceImpl implements SysUserService {
     @Autowired
     private MenuMapper menuMapper;
 
-    private final String CACHE_KEY = "sysUser:";
-
     @Override
-    //@Cacheable(key = "#root.caches[0].name+'info.permission'", value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY)
     public Response<SysUserRes> sysUserInfo() {
         Response<SysUserRes> response = new Response<>();
 

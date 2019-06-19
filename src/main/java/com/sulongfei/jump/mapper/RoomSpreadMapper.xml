@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sulongfei.jump.mapper.RoomSpreadMapper">
+    <resultMap id="BaseResultMap" type="com.sulongfei.jump.model.RoomSpread">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="remote_club_id" jdbcType="BIGINT" property="remoteClubId"/>
+        <result column="create_user_id" jdbcType="BIGINT" property="createUserId"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="spread_goods_id" jdbcType="BIGINT" property="spreadGoodsId"/>
+        <result column="ticket_num" jdbcType="INTEGER" property="ticketNum"/>
+        <result column="join_num" jdbcType="INTEGER" property="joinNum"/>
+        <result column="partake_num" jdbcType="INTEGER" property="partakeNum"/>
+        <result column="win_record_id" jdbcType="BIGINT" property="winRecordId"/>
+        <result column="win_num" jdbcType="INTEGER" property="winNum"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, remote_club_id, create_user_id, password, spread_goods_id, ticket_num, join_num, partake_num,
+    win_record_id, win_num, status, create_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from room_spread
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from room_spread
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.sulongfei.jump.model.RoomSpread">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into room_spread (remote_club_id, create_user_id, password,
+        spread_goods_id, ticket_num, join_num,
+        partake_num, win_record_id, win_num,
+        status, create_time)
+        values (#{remoteClubId,jdbcType=BIGINT}, #{createUserId,jdbcType=BIGINT}, #{password,jdbcType=VARCHAR},
+        #{spreadGoodsId,jdbcType=BIGINT}, #{ticketNum,jdbcType=INTEGER}, #{joinNum,jdbcType=INTEGER},
+        #{partakeNum,jdbcType=INTEGER}, #{winRecordId,jdbcType=BIGINT}, #{winNum,jdbcType=INTEGER},
+        #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.sulongfei.jump.model.RoomSpread">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into room_spread
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="remoteClubId != null">
+                remote_club_id,
+            </if>
+            <if test="createUserId != null">
+                create_user_id,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="spreadGoodsId != null">
+                spread_goods_id,
+            </if>
+            <if test="ticketNum != null">
+                ticket_num,
+            </if>
+            <if test="joinNum != null">
+                join_num,
+            </if>
+            <if test="partakeNum != null">
+                partake_num,
+            </if>
+            <if test="winRecordId != null">
+                win_record_id,
+            </if>
+            <if test="winNum != null">
+                win_num,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="remoteClubId != null">
+                #{remoteClubId,jdbcType=BIGINT},
+            </if>
+            <if test="createUserId != null">
+                #{createUserId,jdbcType=BIGINT},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="spreadGoodsId != null">
+                #{spreadGoodsId,jdbcType=BIGINT},
+            </if>
+            <if test="ticketNum != null">
+                #{ticketNum,jdbcType=INTEGER},
+            </if>
+            <if test="joinNum != null">
+                #{joinNum,jdbcType=INTEGER},
+            </if>
+            <if test="partakeNum != null">
+                #{partakeNum,jdbcType=INTEGER},
+            </if>
+            <if test="winRecordId != null">
+                #{winRecordId,jdbcType=BIGINT},
+            </if>
+            <if test="winNum != null">
+                #{winNum,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.sulongfei.jump.model.RoomSpread">
+        update room_spread
+        <set>
+            <if test="remoteClubId != null">
+                remote_club_id = #{remoteClubId,jdbcType=BIGINT},
+            </if>
+            <if test="createUserId != null">
+                create_user_id = #{createUserId,jdbcType=BIGINT},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="spreadGoodsId != null">
+                spread_goods_id = #{spreadGoodsId,jdbcType=BIGINT},
+            </if>
+            <if test="ticketNum != null">
+                ticket_num = #{ticketNum,jdbcType=INTEGER},
+            </if>
+            <if test="joinNum != null">
+                join_num = #{joinNum,jdbcType=INTEGER},
+            </if>
+            <if test="partakeNum != null">
+                partake_num = #{partakeNum,jdbcType=INTEGER},
+            </if>
+            <if test="winRecordId != null">
+                win_record_id = #{winRecordId,jdbcType=BIGINT},
+            </if>
+            <if test="winNum != null">
+                win_num = #{winNum,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.sulongfei.jump.model.RoomSpread">
+    update room_spread
+    set remote_club_id = #{remoteClubId,jdbcType=BIGINT},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      password = #{password,jdbcType=VARCHAR},
+      spread_goods_id = #{spreadGoodsId,jdbcType=BIGINT},
+      ticket_num = #{ticketNum,jdbcType=INTEGER},
+      join_num = #{joinNum,jdbcType=INTEGER},
+      partake_num = #{partakeNum,jdbcType=INTEGER},
+      win_record_id = #{winRecordId,jdbcType=BIGINT},
+      win_num = #{winNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+    <!--<cache type="com.sulongfei.jump.config.RedisCache" blocking="false" flushInterval="6000000" readOnly="false" size="1024" eviction="LRU"/>-->
+    <resultMap extends="BaseResultMap" id="RoomSpreadResult" type="com.sulongfei.jump.model.RoomSpread">
+        <collection column="spread_goods_id" ofType="SpreadGoods" property="spreadGoods"
+                    select="com.sulongfei.jump.mapper.SpreadGoodsMapper.selectByPrimaryKey"/>
+    </resultMap>
+    <select id="selectByPage" resultMap="RoomSpreadResult">
+        select
+        <include refid="Base_Column_List"/>
+        from room_spread
+        <where>
+            <if test="remoteClubId != null">
+                and remote_club_id = #{remoteClubId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+</mapper>

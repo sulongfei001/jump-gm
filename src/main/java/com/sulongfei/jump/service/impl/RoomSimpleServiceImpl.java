@@ -4,14 +4,15 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.sulongfei.jump.constants.Constants;
-import com.sulongfei.jump.dto.RoomDTO;
+import com.sulongfei.jump.dto.SimpleRoomDTO;
 import com.sulongfei.jump.mapper.RoomSimpleMapper;
 import com.sulongfei.jump.model.RoomSimple;
 import com.sulongfei.jump.response.Response;
 import com.sulongfei.jump.response.RoomSimpleRes;
-import com.sulongfei.jump.service.RoomService;
+import com.sulongfei.jump.service.RoomSimpleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -30,17 +31,16 @@ import java.util.List;
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-public class RoomServiceImpl implements RoomService {
+@CacheConfig(cacheNames = {Constants.CacheName.SERVICE_CACHE + Constants.CacheName.SIMPLE_ROOM_CACHE})
+public class RoomSimpleServiceImpl implements RoomSimpleService {
 
     @Autowired
     private RoomSimpleMapper roomSimpleMapper;
 
-    private final String SIMPLE_CACHE_KEY = "simpleRoomCache:";
-
     @Override
     @Transactional(readOnly = false)
-    @CacheEvict(value = Constants.RedisName.SERVICE_CACHE + SIMPLE_CACHE_KEY, allEntries = true)
-    public Response createSimpleRoom(RoomDTO dto) {
+    @CacheEvict(allEntries = true)
+    public Response createSimpleRoom(SimpleRoomDTO dto) {
         RoomSimple roomSimple = new RoomSimple();
         BeanUtils.copyProperties(dto, roomSimple);
         roomSimple.setConsumeNum(Integer.valueOf(Constants.Common.ZERO));
@@ -50,8 +50,8 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    @Cacheable(key = "#root.caches[0].name+'room.simple.list_'+#roomDTO", value = Constants.RedisName.SERVICE_CACHE + SIMPLE_CACHE_KEY)
-    public Response simpleList(RoomDTO roomDTO) {
+    @Cacheable(key = "#root.caches[0].name+'room.simple.list_'+#roomDTO")
+    public Response simpleList(SimpleRoomDTO roomDTO) {
         PageHelper.startPage(roomDTO.getPage(), roomDTO.getPageSize());
         List<RoomSimple> list = roomSimpleMapper.selectRoomSimple(roomDTO.getRemoteClubId());
         List<RoomSimpleRes> data = Lists.newArrayList();
@@ -65,14 +65,14 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     @Transactional(readOnly = false)
-    @CacheEvict(value = Constants.RedisName.SERVICE_CACHE + SIMPLE_CACHE_KEY, allEntries = true)
+    @CacheEvict(allEntries = true)
     public Response deleteSimpleRoom(long id) {
         roomSimpleMapper.deleteByPrimaryKey(id);
         return new Response();
     }
 
     @Override
-    @Cacheable(key = "#root.caches[0].name+'room.simple.'+#id", value = Constants.RedisName.SERVICE_CACHE + SIMPLE_CACHE_KEY)
+    @Cacheable(key = "#root.caches[0].name+'room.simple.'+#id")
     public Response getSimpleRoom(long id) {
         RoomSimple roomSimple = roomSimpleMapper.selectByPrimaryKey(id);
         RoomSimpleRes data = new RoomSimpleRes();
@@ -82,8 +82,8 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     @Transactional(readOnly = false)
-    @CacheEvict(value = Constants.RedisName.SERVICE_CACHE + SIMPLE_CACHE_KEY, allEntries = true)
-    public Response updateSimpleRoom(RoomDTO dto) {
+    @CacheEvict(allEntries = true)
+    public Response updateSimpleRoom(SimpleRoomDTO dto) {
         RoomSimple roomSimple = new RoomSimple();
         BeanUtils.copyProperties(dto, roomSimple);
         roomSimpleMapper.updateByPrimaryKeySelective(roomSimple);

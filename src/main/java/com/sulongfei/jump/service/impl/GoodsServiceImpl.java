@@ -18,6 +18,7 @@ import com.sulongfei.jump.rest.response.RestResponse;
 import com.sulongfei.jump.service.GoodsService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,7 @@ import java.util.List;
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+@CacheConfig(cacheNames = {Constants.CacheName.SERVICE_CACHE + Constants.CacheName.GOODS_CACHE})
 public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
@@ -49,11 +51,9 @@ public class GoodsServiceImpl implements GoodsService {
     @Autowired
     private SpreadGoodsMapper spreadGoodsMapper;
 
-    private final String CACHE_KEY = "goodsCache:";
-
     @Override
     @Transactional(readOnly = false)
-    @CacheEvict(value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY, allEntries = true)
+    @CacheEvict(allEntries = true)
     public Response createSpreadGoods(GoodsDTO goodsDTO) {
         SpreadGoods spreadGoods = new SpreadGoods();
         BeanUtils.copyProperties(goodsDTO, spreadGoods);
@@ -62,7 +62,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    @Cacheable(key = "#root.caches[0].name+'goods.spread.list_'+#goodsDTO", value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY)
+    @Cacheable(key = "#root.caches[0].name+'goods.spread.list_'+#goodsDTO")
     public Response spreadGoodsList(GoodsDTO goodsDTO) {
         PageHelper.startPage(goodsDTO.getPage(), goodsDTO.getPageSize());
         List<SpreadGoods> list = spreadGoodsMapper.queryList(goodsDTO.getRemoteClubId(), goodsDTO.getGoodsName());
@@ -76,7 +76,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    @Cacheable(key = "#root.caches[0].name+'goods.local.list_'+#goodsDTO", value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY)
+    @Cacheable(key = "#root.caches[0].name+'goods.local.list_'+#goodsDTO")
     public Response localGoodsList(GoodsDTO goodsDTO) {
         PageHelper.startPage(goodsDTO.getPage(), goodsDTO.getPageSize());
         List<Goods> list = goodsMapper.queryList(goodsDTO.getRemoteClubId());
@@ -90,7 +90,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    @Cacheable(key = "#root.caches[0].name+'goods.local.all_'+#goodsDTO.remoteClubId", value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY)
+    @Cacheable(key = "#root.caches[0].name+'goods.local.all_'+#goodsDTO.remoteClubId")
     public Response localGoodsAll(GoodsDTO goodsDTO) {
         List<Goods> list = goodsMapper.selectByClubId(goodsDTO.getRemoteClubId());
         List<GoodsRes> data = Lists.newArrayList();
@@ -103,7 +103,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    @Cacheable(key = "#root.caches[0].name+'goods.spread.'+#id", value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY)
+    @Cacheable(key = "#root.caches[0].name+'goods.spread.'+#id")
     public Response getSpreadGoods(long id) {
         SpreadGoods spreadGoods = spreadGoodsMapper.selectByPrimaryKey(id);
         SpreadGoodsRes data = new SpreadGoodsRes();
@@ -113,7 +113,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     @Transactional(readOnly = false)
-    @CacheEvict(value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY, allEntries = true)
+    @CacheEvict(allEntries = true)
     public Response updateSpreadGoods(GoodsDTO dto) {
         SpreadGoods spreadGoods = new SpreadGoods();
         BeanUtils.copyProperties(dto, spreadGoods);
@@ -123,7 +123,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     @Transactional(readOnly = false)
-    @CacheEvict(value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY, allEntries = true)
+    @CacheEvict(allEntries = true)
     public Response synchronizeGoodsList() {
         ResponseEntity<RestResponse<List<GoodsResponse>>> res = restService.getGoodsList(null);
         if (!HttpStatus.OK.equals(res.getStatusCode()) || !"200".equals(res.getBody().getErrorCode())) {

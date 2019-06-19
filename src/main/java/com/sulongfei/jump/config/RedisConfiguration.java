@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
 
 @Configuration
 @EnableCaching
@@ -17,7 +16,7 @@ public class RedisConfiguration extends CachingConfigurerSupport {
     @Bean
     public CacheManager cacheManager(MyRedisTemplate redisTemplate) {
         RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
-        cacheManager.setDefaultExpiration(300);
+        cacheManager.setDefaultExpiration(60);
         return cacheManager;
     }
 

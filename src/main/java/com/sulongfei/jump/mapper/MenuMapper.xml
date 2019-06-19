@@ -175,7 +175,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-    <!--<cache type="org.mybatis.caches.redis.RedisCache" />-->
+    <cache type="com.sulongfei.jump.config.RedisCache" blocking="false" flushInterval="6000000" readOnly="false" size="1024" eviction="LRU"/>
     <sql id="All_Column_BY_ALIAS">
     SELECT
         m.id,

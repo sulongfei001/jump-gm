@@ -15,6 +15,7 @@ import com.sulongfei.jump.rest.response.RestResponse;
 import com.sulongfei.jump.service.ClubService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
@@ -35,16 +36,15 @@ import java.util.List;
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+@CacheConfig(cacheNames = {Constants.CacheName.SERVICE_CACHE + Constants.CacheName.CLUB_CACHE})
 public class ClubServiceImpl implements ClubService {
     @Autowired
     private RestService restService;
     @Autowired
     private ClubMapper clubMapper;
 
-    private final String CACHE_KEY = "clubCache:";
-
     @Override
-    @Cacheable(key = "#root.caches[0].name+'club.list_'+#clubDTO", value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY)
+    @Cacheable(key = "#root.caches[0].name+'club.list_'+#clubDTO")
     public Response localClubList(ClubDTO clubDTO) {
         PageHelper.startPage(clubDTO.getPage(), clubDTO.getPageSize());
         List<Club> list = clubMapper.queryList();
@@ -58,7 +58,7 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
-    @Cacheable(key = "#root.caches[0].name+'club.all'", value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY)
+    @Cacheable(key = "#root.caches[0].name+'club.all'")
     public Response localClubAll() {
         List<Club> list = clubMapper.selectAll();
         List<ClubRes> data = Lists.newArrayList();
@@ -72,7 +72,7 @@ public class ClubServiceImpl implements ClubService {
 
     @Override
     @Transactional(readOnly = false)
-    @CacheEvict(value = Constants.RedisName.SERVICE_CACHE + CACHE_KEY, allEntries = true)
+    @CacheEvict(allEntries = true)
     public Response synchronizeClubList() {
         ResponseEntity<RestResponse<List<OrgResponse>>> res = restService.getOrgList(null);
         if (!HttpStatus.OK.equals(res.getStatusCode()) || !"200".equals(res.getBody().getErrorCode())) {

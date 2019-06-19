@@ -1,8 +1,10 @@
 package com.sulongfei.jump.web.controller;
 
-import com.sulongfei.jump.dto.RoomDTO;
+import com.sulongfei.jump.dto.SimpleRoomDTO;
+import com.sulongfei.jump.dto.SpreadRoomDTO;
 import com.sulongfei.jump.response.Response;
-import com.sulongfei.jump.service.RoomService;
+import com.sulongfei.jump.service.RoomSimpleService;
+import com.sulongfei.jump.service.RoomSpreadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,30 +19,37 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/room")
 public class RoomController {
     @Autowired
-    private RoomService roomService;
+    private RoomSimpleService simpleService;
+    @Autowired
+    private RoomSpreadService spreadService;
 
     @PostMapping("/simple/list")
-    public Response roomList(@RequestBody RoomDTO dto) {
-        return roomService.simpleList(dto);
+    public Response roomList(@RequestBody SimpleRoomDTO dto) {
+        return simpleService.simpleList(dto);
     }
 
     @PostMapping("/simple/create")
-    public Response createSimpleRoom(@RequestBody RoomDTO dto) {
-        return roomService.createSimpleRoom(dto);
+    public Response createSimpleRoom(@RequestBody SimpleRoomDTO dto) {
+        return simpleService.createSimpleRoom(dto);
     }
 
     @DeleteMapping("/simple/delete/{id}")
     public Response deleteSimpleRoom(@PathVariable long id) {
-        return roomService.deleteSimpleRoom(id);
+        return simpleService.deleteSimpleRoom(id);
     }
 
     @PostMapping("/simple/detail/{id}")
     public Response getSimpleRoom(@PathVariable long id) {
-        return roomService.getSimpleRoom(id);
+        return simpleService.getSimpleRoom(id);
     }
 
     @PutMapping("/simple/update")
-    public Response updateSimpleRoom(@RequestBody RoomDTO dto) {
-        return roomService.updateSimpleRoom(dto);
+    public Response updateSimpleRoom(@RequestBody SimpleRoomDTO dto) {
+        return simpleService.updateSimpleRoom(dto);
+    }
+
+    @PostMapping("/spread/list")
+    public Response spreadList(@RequestBody SpreadRoomDTO dto){
+        return spreadService.spreadList(dto);
     }
 }

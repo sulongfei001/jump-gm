@@ -15,7 +15,7 @@ import java.sql.Timestamp;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class RoomDTO extends BaseDTO {
+public class SimpleRoomDTO extends BaseDTO {
 
     private Long remoteClubId;
 

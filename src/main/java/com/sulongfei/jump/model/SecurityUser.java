@@ -3,6 +3,7 @@ package com.sulongfei.jump.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
@@ -13,6 +14,10 @@ public class SecurityUser extends Model {
 
     private Long id;
 
+    private Long memberId;
+
+    private Boolean isSaler;
+
     private String phoneNumber;
 
     private String password;
@@ -21,11 +26,11 @@ public class SecurityUser extends Model {
 
     private String nickname;
 
-    private Boolean gender;
+    private Byte gender;
 
     private Long registerClue;
 
-    private Date lastOperationTime;
+    private Timestamp lastOperationTime;
 
     private Long lastOperationClub;
 
@@ -34,6 +39,8 @@ public class SecurityUser extends Model {
     private String receiverAddress;
 
     private Boolean everydayTicket;
+
+    private Integer ticketNum;
 
 
 }
