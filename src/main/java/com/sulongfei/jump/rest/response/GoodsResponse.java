@@ -20,4 +20,5 @@ public class GoodsResponse {
     private Long orgId;
     private Integer stockNum;
     private BigDecimal price;
+    private Integer useType;
 }

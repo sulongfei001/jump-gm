@@ -26,8 +26,6 @@ public class RoomSimple extends Model {
 
     private Integer goodsNum;
 
-    private BigDecimal goodsPrice;
-
     private String goodsPicture;
 
     private String goodsText;

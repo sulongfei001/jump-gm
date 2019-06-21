@@ -5,7 +5,6 @@ import com.google.common.collect.Sets;
 import com.sulongfei.jump.model.Menu;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -17,9 +16,7 @@ import java.util.Set;
  * @Version 1.0
  */
 @Data
-public class SysUserRes implements Serializable {
-
-    private static final long serialVersionUID = -1092028737932526137L;
+public class SysUserRes {
     private String sysName;
 
     private String sysCode;

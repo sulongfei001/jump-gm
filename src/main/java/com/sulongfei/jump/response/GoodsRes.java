@@ -13,9 +13,7 @@ import java.math.BigDecimal;
  * @Version 1.0
  */
 @Data
-public class GoodsRes implements Serializable {
-
-    private static final long serialVersionUID = 5748127016402437088L;
+public class GoodsRes {
 
     private Long id;
 
@@ -28,6 +26,8 @@ public class GoodsRes implements Serializable {
     private Integer goodsNum;
 
     private BigDecimal goodsPrice;
+
+    private Integer goodsType;
 
     private String goodsPicture;
 

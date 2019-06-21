@@ -1,7 +1,6 @@
 package com.sulongfei.jump.service;
 
-import com.sulongfei.jump.dto.SimpleRoomDTO;
-import com.sulongfei.jump.dto.SpreadRoomDTO;
+import com.sulongfei.jump.dto.RoomSimpleDTO;
 import com.sulongfei.jump.response.Response;
 
 /**
@@ -13,14 +12,14 @@ import com.sulongfei.jump.response.Response;
  */
 
 public interface RoomSimpleService {
-    Response createSimpleRoom(SimpleRoomDTO dto);
+    Response createSimpleRoom(RoomSimpleDTO dto);
 
-    Response simpleList(SimpleRoomDTO roomDTO);
+    Response simpleList(RoomSimpleDTO roomDTO);
 
     Response deleteSimpleRoom(long id);
 
     Response getSimpleRoom(long id);
 
-    Response updateSimpleRoom(SimpleRoomDTO dto);
+    Response updateSimpleRoom(RoomSimpleDTO dto);
 
 }

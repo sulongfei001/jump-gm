@@ -5,13 +5,15 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class EnumRes implements Serializable {
-
-    private static final long serialVersionUID = -1280398705355998555L;
-
-    private Integer type;
+public class EnumRes {
 
     private String key;
-
+    private Integer type;
     private String value;
+
+    public EnumRes(String key, Integer type, String value) {
+        this.key = key;
+        this.type = type;
+        this.value = value;
+    }
 }

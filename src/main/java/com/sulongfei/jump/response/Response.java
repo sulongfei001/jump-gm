@@ -1,6 +1,5 @@
 package com.sulongfei.jump.response;
 
-import com.github.pagehelper.PageInfo;
 import com.sulongfei.jump.constants.ResponseStatus;
 import lombok.Data;
 

@@ -13,9 +13,7 @@ import java.sql.Timestamp;
  * @Version 1.0
  */
 @Data
-public class ClubRes implements Serializable {
-
-    private static final long serialVersionUID = 7363552638274078748L;
+public class ClubRes {
 
     private Long id;
 

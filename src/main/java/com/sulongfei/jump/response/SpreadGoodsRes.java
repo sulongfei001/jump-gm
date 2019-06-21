@@ -2,7 +2,6 @@ package com.sulongfei.jump.response;
 
 import lombok.Data;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -13,9 +12,7 @@ import java.math.BigDecimal;
  * @Version 1.0
  */
 @Data
-public class SpreadGoodsRes implements Serializable {
-
-    private static final long serialVersionUID = -4003437270082575448L;
+public class SpreadGoodsRes {
 
     private Long id;
 
@@ -27,13 +24,9 @@ public class SpreadGoodsRes implements Serializable {
 
     private Integer goodsNum;
 
-    private BigDecimal goodsPrice;
-
     private String goodsPicture;
 
     private String goodsText;
-
-    private Integer prizeProbability;
 
     private Integer premiumProportion;
 

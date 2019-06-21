@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.sulongfei.jump.constants.Constants;
-import com.sulongfei.jump.dto.SimpleRoomDTO;
+import com.sulongfei.jump.dto.RoomSimpleDTO;
 import com.sulongfei.jump.mapper.RoomSimpleMapper;
 import com.sulongfei.jump.model.RoomSimple;
 import com.sulongfei.jump.response.Response;
@@ -40,10 +40,10 @@ public class RoomSimpleServiceImpl implements RoomSimpleService {
     @Override
     @Transactional(readOnly = false)
     @CacheEvict(allEntries = true)
-    public Response createSimpleRoom(SimpleRoomDTO dto) {
+    public Response createSimpleRoom(RoomSimpleDTO dto) {
         RoomSimple roomSimple = new RoomSimple();
         BeanUtils.copyProperties(dto, roomSimple);
-        roomSimple.setConsumeNum(Integer.valueOf(Constants.Common.ZERO));
+        roomSimple.setConsumeNum(0);
         roomSimple.setCreateTime(new Timestamp(System.currentTimeMillis()));
         roomSimpleMapper.insertSelective(roomSimple);
         return new Response();
@@ -51,7 +51,7 @@ public class RoomSimpleServiceImpl implements RoomSimpleService {
 
     @Override
     @Cacheable(key = "#root.caches[0].name+'room.simple.list_'+#roomDTO")
-    public Response simpleList(SimpleRoomDTO roomDTO) {
+    public Response simpleList(RoomSimpleDTO roomDTO) {
         PageHelper.startPage(roomDTO.getPage(), roomDTO.getPageSize());
         List<RoomSimple> list = roomSimpleMapper.selectRoomSimple(roomDTO.getRemoteClubId());
         List<RoomSimpleRes> data = Lists.newArrayList();
@@ -83,7 +83,7 @@ public class RoomSimpleServiceImpl implements RoomSimpleService {
     @Override
     @Transactional(readOnly = false)
     @CacheEvict(allEntries = true)
-    public Response updateSimpleRoom(SimpleRoomDTO dto) {
+    public Response updateSimpleRoom(RoomSimpleDTO dto) {
         RoomSimple roomSimple = new RoomSimple();
         BeanUtils.copyProperties(dto, roomSimple);
         roomSimpleMapper.updateByPrimaryKeySelective(roomSimple);

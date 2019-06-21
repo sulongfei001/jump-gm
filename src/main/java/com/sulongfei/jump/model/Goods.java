@@ -21,6 +21,8 @@ public class Goods extends Model {
 
     private BigDecimal goodsPrice;
 
+    private Integer goodsType;
+
     private String goodsPicture;
 
     private String detailPicture;

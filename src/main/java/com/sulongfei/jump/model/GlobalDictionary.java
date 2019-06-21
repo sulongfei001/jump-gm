@@ -1,17 +1,9 @@
-package com.sulongfei.jump.response;
+package com.sulongfei.jump.model;
 
 import lombok.Data;
 
-/**
- * 〈〉
- *
- * @Author sulongfei
- * @Date 2019/6/19 10:36
- * @Version 1.0
- */
 @Data
-public class SysConfigRes {
-
+public class GlobalDictionary extends Model {
     private Long id;
 
     private String key;

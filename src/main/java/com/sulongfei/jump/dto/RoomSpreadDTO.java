@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SpreadRoomDTO extends BaseDTO {
+public class RoomSpreadDTO extends BaseDTO {
     private Long roomId;
     private Long remoteClubId;
 }

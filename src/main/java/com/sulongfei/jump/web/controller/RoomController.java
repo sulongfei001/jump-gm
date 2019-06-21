@@ -1,7 +1,7 @@
 package com.sulongfei.jump.web.controller;
 
-import com.sulongfei.jump.dto.SimpleRoomDTO;
-import com.sulongfei.jump.dto.SpreadRoomDTO;
+import com.sulongfei.jump.dto.RoomSimpleDTO;
+import com.sulongfei.jump.dto.RoomSpreadDTO;
 import com.sulongfei.jump.response.Response;
 import com.sulongfei.jump.service.RoomSimpleService;
 import com.sulongfei.jump.service.RoomSpreadService;
@@ -24,12 +24,12 @@ public class RoomController {
     private RoomSpreadService spreadService;
 
     @PostMapping("/simple/list")
-    public Response roomList(@RequestBody SimpleRoomDTO dto) {
+    public Response roomList(@RequestBody RoomSimpleDTO dto) {
         return simpleService.simpleList(dto);
     }
 
     @PostMapping("/simple/create")
-    public Response createSimpleRoom(@RequestBody SimpleRoomDTO dto) {
+    public Response createSimpleRoom(@RequestBody RoomSimpleDTO dto) {
         return simpleService.createSimpleRoom(dto);
     }
 
@@ -44,12 +44,12 @@ public class RoomController {
     }
 
     @PutMapping("/simple/update")
-    public Response updateSimpleRoom(@RequestBody SimpleRoomDTO dto) {
+    public Response updateSimpleRoom(@RequestBody RoomSimpleDTO dto) {
         return simpleService.updateSimpleRoom(dto);
     }
 
     @PostMapping("/spread/list")
-    public Response spreadList(@RequestBody SpreadRoomDTO dto){
+    public Response spreadList(@RequestBody RoomSpreadDTO dto){
         return spreadService.spreadList(dto);
     }
 }

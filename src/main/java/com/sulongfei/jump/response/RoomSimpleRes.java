@@ -14,6 +14,7 @@ import java.sql.Timestamp;
  */
 @Data
 public class RoomSimpleRes {
+
     private Long id;
 
     private Long remoteClubId;
@@ -31,8 +32,6 @@ public class RoomSimpleRes {
     private String goodsName;
 
     private Integer goodsNum;
-
-    private BigDecimal goodsPrice;
 
     private String goodsPicture;
 

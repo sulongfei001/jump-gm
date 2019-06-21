@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.sulongfei.jump.constants.Constants;
-import com.sulongfei.jump.dto.SpreadRoomDTO;
+import com.sulongfei.jump.dto.RoomSpreadDTO;
 import com.sulongfei.jump.mapper.RecordSpreadMapper;
 import com.sulongfei.jump.mapper.RoomSpreadMapper;
 import com.sulongfei.jump.mapper.SecurityUserMapper;
@@ -46,7 +46,7 @@ public class RoomSpreadServiceImpl implements RoomSpreadService {
 
     @Override
     @Cacheable(key = "#root.caches[0].name+'room.spread.list_'+#dto")
-    public Response spreadList(SpreadRoomDTO dto) {
+    public Response spreadList(RoomSpreadDTO dto) {
         PageHelper.startPage(dto.getPage(), dto.getPageSize());
         List<RoomSpread> list = roomSpreadMapper.selectByPage(dto.getRemoteClubId());
         List<RoomSpreadRes> data = Lists.newArrayList();

@@ -1,6 +1,6 @@
 package com.sulongfei.jump.service;
 
-import com.sulongfei.jump.dto.SpreadRoomDTO;
+import com.sulongfei.jump.dto.RoomSpreadDTO;
 import com.sulongfei.jump.response.Response;
 
 /**
@@ -11,5 +11,5 @@ import com.sulongfei.jump.response.Response;
  * @Version 1.0
  */
 public interface RoomSpreadService {
-    Response spreadList(SpreadRoomDTO dto);
+    Response spreadList(RoomSpreadDTO dto);
 }

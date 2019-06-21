@@ -5,7 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.sulongfei.jump.constants.Constants;
 import com.sulongfei.jump.constants.ResponseStatus;
-import com.sulongfei.jump.dto.GoodsDTO;
+import com.sulongfei.jump.dto.SpreadGoodsDTO;
 import com.sulongfei.jump.mapper.GoodsMapper;
 import com.sulongfei.jump.mapper.SpreadGoodsMapper;
 import com.sulongfei.jump.model.Goods;
@@ -54,7 +54,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     @Transactional(readOnly = false)
     @CacheEvict(allEntries = true)
-    public Response createSpreadGoods(GoodsDTO goodsDTO) {
+    public Response createSpreadGoods(SpreadGoodsDTO goodsDTO) {
         SpreadGoods spreadGoods = new SpreadGoods();
         BeanUtils.copyProperties(goodsDTO, spreadGoods);
         spreadGoodsMapper.insertSelective(spreadGoods);
@@ -63,7 +63,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     @Cacheable(key = "#root.caches[0].name+'goods.spread.list_'+#goodsDTO")
-    public Response spreadGoodsList(GoodsDTO goodsDTO) {
+    public Response spreadGoodsList(SpreadGoodsDTO goodsDTO) {
         PageHelper.startPage(goodsDTO.getPage(), goodsDTO.getPageSize());
         List<SpreadGoods> list = spreadGoodsMapper.queryList(goodsDTO.getRemoteClubId(), goodsDTO.getGoodsName());
         List<SpreadGoodsRes> data = Lists.newArrayList();
@@ -77,7 +77,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     @Cacheable(key = "#root.caches[0].name+'goods.local.list_'+#goodsDTO")
-    public Response localGoodsList(GoodsDTO goodsDTO) {
+    public Response localGoodsList(SpreadGoodsDTO goodsDTO) {
         PageHelper.startPage(goodsDTO.getPage(), goodsDTO.getPageSize());
         List<Goods> list = goodsMapper.queryList(goodsDTO.getRemoteClubId());
         List<GoodsRes> data = Lists.newArrayList();
@@ -91,7 +91,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     @Cacheable(key = "#root.caches[0].name+'goods.local.all_'+#goodsDTO.remoteClubId")
-    public Response localGoodsAll(GoodsDTO goodsDTO) {
+    public Response localGoodsAll(SpreadGoodsDTO goodsDTO) {
         List<Goods> list = goodsMapper.selectByClubId(goodsDTO.getRemoteClubId());
         List<GoodsRes> data = Lists.newArrayList();
         list.forEach(goods -> {
@@ -114,7 +114,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     @Transactional(readOnly = false)
     @CacheEvict(allEntries = true)
-    public Response updateSpreadGoods(GoodsDTO dto) {
+    public Response updateSpreadGoods(SpreadGoodsDTO dto) {
         SpreadGoods spreadGoods = new SpreadGoods();
         BeanUtils.copyProperties(dto, spreadGoods);
         spreadGoodsMapper.updateByPrimaryKeySelective(spreadGoods);
@@ -154,6 +154,7 @@ public class GoodsServiceImpl implements GoodsService {
         goods.setGoodsName(res.getName());
         goods.setGoodsNum(res.getStockNum());
         goods.setGoodsPrice(res.getPrice());
+        goods.setGoodsType(res.getUseType());
         goods.setGoodsPicture(res.getLogo());
         goods.setDetailPicture(res.getDetailLogo());
         return goods;
@@ -163,6 +164,7 @@ public class GoodsServiceImpl implements GoodsService {
         if (!ObjectUtils.isEmpty(res.getGoodsId()) && res.getGoodsId().equals(goods.getRemoteGoodsId()) &&
                 !ObjectUtils.isEmpty(res.getOrgId()) && res.getOrgId().equals(goods.getRemoteClubId()) &&
                 !ObjectUtils.isEmpty(res.getName()) && res.getName().equals(goods.getGoodsName()) &&
+                !ObjectUtils.isEmpty(res.getUseType()) && res.getUseType().equals(goods.getGoodsType()) &&
                 !ObjectUtils.isEmpty(res.getLogo()) && res.getLogo().equals(goods.getGoodsPicture()) &&
                 !ObjectUtils.isEmpty(res.getDetailLogo()) && res.getDetailLogo().equals(goods.getDetailPicture()) &&
                 !ObjectUtils.isEmpty(res.getStockNum()) && res.getStockNum().equals(goods.getGoodsNum()) &&

@@ -9,11 +9,6 @@ package com.sulongfei.jump.constants;
  */
 public interface Constants {
 
-    interface Delete {
-        Boolean NO = false;
-        Boolean YES = true;
-    }
-
     interface CacheName {
         String SERVICE_CACHE = "service_cache:";
         String CLUB_CACHE = "club_cache:";
@@ -22,19 +17,9 @@ public interface Constants {
         String SPREAD_ROOM_CACHE = "spread_room_cache:";
     }
 
-    /**
-     * 常用字符串数字常量
-     */
-    interface Common {
-        String ZERO = "0";
-        String ONE = "1";
-        String TWO = "2";
-        String THREE = "3";
-        String FOUR = "4";
-        String FIVE = "5";
-        String SIX = "6";
-        String SEVEN = "7";
-        String EIGHT = "8";
-        String NINE = "9";
+    interface Type {
+        // 商品类型
+        String GOODS_TYPE = "goodsType";
     }
+
 }

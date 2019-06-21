@@ -13,6 +13,7 @@ import java.sql.Timestamp;
  */
 @Data
 public class RoomSpreadRes {
+
     private Long id;
 
     private String password;

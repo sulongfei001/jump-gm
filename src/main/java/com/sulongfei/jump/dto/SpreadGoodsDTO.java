@@ -4,28 +4,21 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 /**
  * 〈〉
  *
  * @Author sulongfei
- * @Date 2019/5/24 14:24
+ * @Date 2019/5/24 16:10
  * @Version 1.0
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SimpleRoomDTO extends BaseDTO {
+public class SpreadGoodsDTO extends BaseDTO {
+
+    private static final long serialVersionUID = 5842373100692301564L;
 
     private Long remoteClubId;
-
-    private Timestamp startTime;
-
-    private Timestamp endTime;
-
-    private Timestamp createTime;
-
-    private Boolean hidden;
 
     private Long remoteGoodsId;
 
@@ -33,13 +26,9 @@ public class SimpleRoomDTO extends BaseDTO {
 
     private Integer goodsNum;
 
-    private BigDecimal goodsPrice;
-
     private String goodsPicture;
 
     private String goodsText;
-
-    private Integer ticketNum;
 
     private Integer prizeProbability;
 
@@ -52,4 +41,5 @@ public class SimpleRoomDTO extends BaseDTO {
     private String picture3;
 
     private String picture4;
+
 }

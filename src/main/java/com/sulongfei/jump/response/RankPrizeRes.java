@@ -3,7 +3,6 @@ package com.sulongfei.jump.response;
 import com.sulongfei.jump.dto.Prize;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,9 +13,7 @@ import java.util.List;
  * @Version 1.0
  */
 @Data
-public class RankPrizeRes implements Serializable {
-
-    private static final long serialVersionUID = 3055778006592378816L;
+public class RankPrizeRes {
 
     private Long remoteClubId;
     private List<Prize> prizeList;
