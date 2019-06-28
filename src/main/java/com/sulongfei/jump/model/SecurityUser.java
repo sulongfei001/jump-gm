@@ -42,6 +42,8 @@ public class SecurityUser extends Model {
 
     private String district;
 
+    private String receiverAddress;
+
     private Boolean everydayTicket;
 
     private Integer ticketNum;

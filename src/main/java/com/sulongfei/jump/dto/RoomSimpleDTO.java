@@ -27,6 +27,8 @@ public class RoomSimpleDTO extends BaseDTO {
 
     private Boolean hidden;
 
+    private Integer sequence;
+
     private Long remoteGoodsId;
 
     private String goodsName;

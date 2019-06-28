@@ -62,7 +62,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    @Cacheable(key = "#root.caches[0].name+'goods.spread.list_'+#goodsDTO")
+    @Cacheable(keyGenerator = "cacheKeyGenerator")
     public Response spreadGoodsList(SpreadGoodsDTO goodsDTO) {
         PageHelper.startPage(goodsDTO.getPage(), goodsDTO.getPageSize());
         List<SpreadGoods> list = spreadGoodsMapper.queryList(goodsDTO.getRemoteClubId(), goodsDTO.getGoodsName());
@@ -70,13 +70,16 @@ public class GoodsServiceImpl implements GoodsService {
         list.forEach(spreadGoods -> {
             SpreadGoodsRes spreadGoodsRes = new SpreadGoodsRes();
             BeanUtils.copyProperties(spreadGoods, spreadGoodsRes);
+            GoodsRes goodsRes = new GoodsRes();
+            BeanUtils.copyProperties(spreadGoods.getGoods(),goodsRes);
+            spreadGoodsRes.setGoods(goodsRes);
             data.add(spreadGoodsRes);
         });
         return Response.toResponse(data, new PageInfo<>(list).getTotal());
     }
 
     @Override
-    @Cacheable(key = "#root.caches[0].name+'goods.local.list_'+#goodsDTO")
+    @Cacheable(keyGenerator = "cacheKeyGenerator")
     public Response localGoodsList(SpreadGoodsDTO goodsDTO) {
         PageHelper.startPage(goodsDTO.getPage(), goodsDTO.getPageSize());
         List<Goods> list = goodsMapper.queryList(goodsDTO.getRemoteClubId());
@@ -90,7 +93,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    @Cacheable(key = "#root.caches[0].name+'goods.local.all_'+#goodsDTO.remoteClubId")
+    @Cacheable(keyGenerator = "cacheKeyGenerator")
     public Response localGoodsAll(SpreadGoodsDTO goodsDTO) {
         List<Goods> list = goodsMapper.selectByClubId(goodsDTO.getRemoteClubId());
         List<GoodsRes> data = Lists.newArrayList();
@@ -103,7 +106,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    @Cacheable(key = "#root.caches[0].name+'goods.spread.'+#id")
+    @Cacheable(keyGenerator = "cacheKeyGenerator")
     public Response getSpreadGoods(long id) {
         SpreadGoods spreadGoods = spreadGoodsMapper.selectByPrimaryKey(id);
         SpreadGoodsRes data = new SpreadGoodsRes();

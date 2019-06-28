@@ -3,6 +3,8 @@ package com.sulongfei.jump.service;
 import com.sulongfei.jump.dto.RoomSimpleDTO;
 import com.sulongfei.jump.response.Response;
 
+import java.util.List;
+
 /**
  * 〈〉
  *
@@ -22,4 +24,7 @@ public interface RoomSimpleService {
 
     Response updateSimpleRoom(RoomSimpleDTO dto);
 
+    Response prizeList(RoomSimpleDTO dto);
+
+    Response sortSimpleRoom(List<RoomSimpleDTO> list);
 }

@@ -45,7 +45,7 @@ public class RoomSpreadServiceImpl implements RoomSpreadService {
     private SecurityUserMapper userMapper;
 
     @Override
-    @Cacheable(key = "#root.caches[0].name+'room.spread.list_'+#dto")
+    @Cacheable(keyGenerator = "cacheKeyGenerator")
     public Response spreadList(RoomSpreadDTO dto) {
         PageHelper.startPage(dto.getPage(), dto.getPageSize());
         List<RoomSpread> list = roomSpreadMapper.selectByPage(dto.getRemoteClubId());

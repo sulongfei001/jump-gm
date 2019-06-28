@@ -50,4 +50,7 @@ public class RoomSimpleRes {
     private String picture3;
 
     private String picture4;
+
+    // 累计中奖人数
+    private Integer prizeCount;
 }

@@ -29,4 +29,6 @@ public class Goods extends Model {
 
     private Integer remainNum;
 
+    private String goodsText;
+
 }

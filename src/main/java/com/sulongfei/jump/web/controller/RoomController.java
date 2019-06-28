@@ -8,6 +8,8 @@ import com.sulongfei.jump.service.RoomSpreadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 〈〉
  *
@@ -46,6 +48,16 @@ public class RoomController {
     @PutMapping("/simple/update")
     public Response updateSimpleRoom(@RequestBody RoomSimpleDTO dto) {
         return simpleService.updateSimpleRoom(dto);
+    }
+
+    @PostMapping("/simple/prize")
+    public Response prizeList(@RequestBody RoomSimpleDTO dto){
+        return simpleService.prizeList(dto);
+    }
+
+    @PostMapping("/simple/sort")
+    public Response sortSimpleRoom(@RequestBody List<RoomSimpleDTO> list){
+        return simpleService.sortSimpleRoom(list);
     }
 
     @PostMapping("/spread/list")

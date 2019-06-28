@@ -38,4 +38,5 @@ public class SpreadGoodsRes {
 
     private String picture4;
 
+    private GoodsRes goods;
 }

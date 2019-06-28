@@ -1,5 +1,6 @@
 package com.sulongfei.jump.mapper;
 
+import com.sulongfei.jump.dto.RoomSimpleDTO;
 import com.sulongfei.jump.model.RoomSimple;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -23,4 +24,6 @@ public interface RoomSimpleMapper {
     int updateByPrimaryKey(RoomSimple record);
 
     List<RoomSimple> selectRoomSimple(@Param("remoteClubId") Long remoteClubId);
+
+    int batchSort(List<RoomSimpleDTO> list);
 }

@@ -44,7 +44,7 @@ public class ClubServiceImpl implements ClubService {
     private ClubMapper clubMapper;
 
     @Override
-    @Cacheable(key = "#root.caches[0].name+'club.list_'+#clubDTO")
+    @Cacheable(keyGenerator = "cacheKeyGenerator")
     public Response localClubList(ClubDTO clubDTO) {
         PageHelper.startPage(clubDTO.getPage(), clubDTO.getPageSize());
         List<Club> list = clubMapper.queryList();
@@ -58,7 +58,7 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
-    @Cacheable(key = "#root.caches[0].name+'club.all'")
+    @Cacheable(keyGenerator = "cacheKeyGenerator")
     public Response localClubAll() {
         List<Club> list = clubMapper.selectAll();
         List<ClubRes> data = Lists.newArrayList();

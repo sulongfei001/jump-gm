@@ -11,10 +11,10 @@ public interface Constants {
 
     interface CacheName {
         String SERVICE_CACHE = "service_cache:";
-        String CLUB_CACHE = "club_cache:";
-        String GOODS_CACHE = "goods_cache:";
-        String SIMPLE_ROOM_CACHE = "simple_room_cache:";
-        String SPREAD_ROOM_CACHE = "spread_room_cache:";
+        String CLUB_CACHE = "club_cache";
+        String GOODS_CACHE = "goods_cache";
+        String SIMPLE_ROOM_CACHE = "simple_room_cache";
+        String SPREAD_ROOM_CACHE = "spread_room_cache";
     }
 
     interface Type {

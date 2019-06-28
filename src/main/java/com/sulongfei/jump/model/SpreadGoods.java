@@ -33,4 +33,6 @@ public class SpreadGoods extends Model {
 
     private String picture4;
 
+    private Goods goods;
+
 }

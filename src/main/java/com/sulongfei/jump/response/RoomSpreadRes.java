@@ -16,6 +16,8 @@ public class RoomSpreadRes {
 
     private Long id;
 
+    private Long remoteClubId;
+
     private String password;
 
     private Integer ticketNum;
