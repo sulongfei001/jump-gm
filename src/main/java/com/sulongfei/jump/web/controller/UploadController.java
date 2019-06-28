@@ -2,7 +2,8 @@ package com.sulongfei.jump.web.controller;
 
 import com.google.common.collect.Maps;
 import com.sulongfei.jump.response.Response;
-import com.sulongfei.jump.utils.AliyunUpload;
+import com.sulongfei.jump.utils.QCloudConfiguration;
+import com.sulongfei.jump.utils.QCloudUpload;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,8 @@ public class UploadController {
     public Response<Map<String,String>> upload(@RequestParam  MultipartFile file) throws IOException {
         String originalFilename = file.getOriginalFilename();
         InputStream inputStream = file.getInputStream();
-        String url = AliyunUpload.uploadToStream(inputStream, originalFilename);
+        String key = QCloudUpload.uploadToStream(inputStream, originalFilename);
+        String url = QCloudConfiguration.getUrl(key);
         log.info("文件上传的URL = {}", url);
         Map<String, String> result = Maps.newConcurrentMap();
         result.put("name", originalFilename);
