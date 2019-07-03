@@ -44,7 +44,7 @@ public class SecurityUser extends Model {
 
     private String receiverAddress;
 
-    private Boolean everydayTicket;
+    private Boolean confirmPush;
 
     private Integer ticketNum;
 
