@@ -27,4 +27,6 @@ public interface RoomSimpleService {
     Response prizeList(RoomSimpleDTO dto);
 
     Response sortSimpleRoom(List<RoomSimpleDTO> list);
+
+    Response historyTicket(RoomSimpleDTO dto);
 }

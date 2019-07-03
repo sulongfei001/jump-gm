@@ -280,11 +280,23 @@
   </update>
 
 
-    <cache/>
     <select id="selectByUsername" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from security_user
         where phone_number = #{username,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from security_user
+        <where>
+            <if test="id != null">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="phoneNumber != null and phoneNumber != '' ">
+                and phone_number = #{phoneNumber,jdbcType=VARCHAR}
+            </if>
+        </where>
     </select>
 </mapper>

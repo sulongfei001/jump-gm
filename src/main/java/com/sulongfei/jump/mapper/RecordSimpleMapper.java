@@ -25,4 +25,6 @@ public interface RecordSimpleMapper {
     Integer countPrize(@Param("roomId") Long roomId);
 
     List<RecordSimple> selectByRoomId(Long roomId);
+
+    List<RecordSimple> historyTicket(Long roomId);
 }

@@ -28,4 +28,6 @@ public class RecordSimple extends Model {
 
     private Timestamp createTime;
 
+    private SecurityUser user;
+
 }

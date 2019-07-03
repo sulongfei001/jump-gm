@@ -55,6 +55,11 @@ public class RoomController {
         return simpleService.prizeList(dto);
     }
 
+    @PostMapping("/simple/history")
+    public Response historyTicket(@RequestBody RoomSimpleDTO dto){
+        return simpleService.historyTicket(dto);
+    }
+
     @PostMapping("/simple/sort")
     public Response sortSimpleRoom(@RequestBody List<RoomSimpleDTO> list){
         return simpleService.sortSimpleRoom(list);

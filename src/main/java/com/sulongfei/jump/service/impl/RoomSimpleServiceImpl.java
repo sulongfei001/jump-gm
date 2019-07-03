@@ -106,6 +106,7 @@ public class RoomSimpleServiceImpl implements RoomSimpleService {
         list.forEach(recordSimple -> {
             RecordSimpleRes res = new RecordSimpleRes();
             BeanUtils.copyProperties(recordSimple, res);
+            res.setUserName(recordSimple.getUser().getNickname());
             data.add(res);
         });
         return Response.toResponse(data, new PageInfo<>(list).getTotal());
@@ -117,5 +118,19 @@ public class RoomSimpleServiceImpl implements RoomSimpleService {
     public Response sortSimpleRoom(List<RoomSimpleDTO> list) {
         int num = roomSimpleMapper.batchSort(list);
         return new Response();
+    }
+
+    @Override
+    public Response historyTicket(RoomSimpleDTO dto) {
+        PageHelper.startPage(dto.getPage(), dto.getPageSize());
+        List<RecordSimple> list = recordSimpleMapper.historyTicket(dto.getId());
+        List<RecordSimpleRes> data = Lists.newArrayList();
+        list.forEach(recordSimple -> {
+            RecordSimpleRes res = new RecordSimpleRes();
+            BeanUtils.copyProperties(recordSimple, res);
+            res.setUserName(recordSimple.getUser().getNickname());
+            data.add(res);
+        });
+        return Response.toResponse(data, new PageInfo<>(list).getTotal());
     }
 }

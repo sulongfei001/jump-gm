@@ -17,6 +17,8 @@ public class RecordSimpleRes {
 
     private Long userId;
 
+    private String userName;
+
     private Integer integral;
 
     private Integer consumeTicket;

@@ -152,15 +152,26 @@
   </update>
 
 
+    <resultMap id="RecordUserMap" type="com.sulongfei.jump.model.RecordSimple" extends="BaseResultMap">
+        <collection column="user_id" property="user" ofType="SecurityUser"
+                    select="com.sulongfei.jump.mapper.SecurityUserMapper.selectByPrimaryKey"/>
+    </resultMap>
     <select id="countPrize" resultType="java.lang.Integer">
         select count(*)
         from record_simple
         where room_id = #{roomId,jdbcType=BIGINT} and is_win = true
     </select>
-    <select id="selectByRoomId" resultMap="BaseResultMap">
+    <select id="selectByRoomId" resultMap="RecordUserMap">
         select
         <include refid="Base_Column_List"/>
         from record_simple
         where room_id = #{roomId,jdbcType=BIGINT} and is_win = true
+    </select>
+    <select id="historyTicket" resultMap="RecordUserMap">
+        select
+        <include refid="Base_Column_List"/>
+        from record_simple
+        where room_id = #{roomId,jdbcType=BIGINT}
+        order by create_time desc
     </select>
 </mapper>

@@ -10,8 +10,6 @@ import java.util.Date;
 @Data
 public class SecurityUser extends Model {
 
-    private static final long serialVersionUID = 4773591935821999048L;
-
     private Long id;
 
     private Long memberId;
@@ -30,7 +28,9 @@ public class SecurityUser extends Model {
 
     private Long registerClue;
 
-    private Timestamp lastOperationTime;
+    private Boolean deleteStatus;
+
+    private Date lastOperationTime;
 
     private Long lastOperationClub;
 
