@@ -13,6 +13,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class UserDTO extends BaseDTO {
-
     private String phoneNumber;
+    private String nickname;
+    private Integer ticketNum;
 }

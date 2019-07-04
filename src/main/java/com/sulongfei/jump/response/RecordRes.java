@@ -12,16 +12,22 @@ import java.sql.Timestamp;
  * @Version 1.0
  */
 @Data
-public class RecordSimpleRes {
+public class RecordRes {
     private Long id;
 
     private Long userId;
 
-    private String userName;
+    private Long roomId;
+
+    private Long roomType;
 
     private Integer integral;
+
+    private Boolean isWin;
 
     private Integer consumeTicket;
 
     private Timestamp createTime;
+
+    private UserRes user;
 }

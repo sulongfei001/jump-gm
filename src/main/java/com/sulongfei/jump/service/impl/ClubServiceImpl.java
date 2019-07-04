@@ -7,9 +7,13 @@ import com.sulongfei.jump.constants.Constants;
 import com.sulongfei.jump.constants.ResponseStatus;
 import com.sulongfei.jump.dto.ClubDTO;
 import com.sulongfei.jump.mapper.ClubMapper;
+import com.sulongfei.jump.mapper.IntegralMapper;
 import com.sulongfei.jump.model.Club;
+import com.sulongfei.jump.model.Integral;
 import com.sulongfei.jump.response.ClubRes;
+import com.sulongfei.jump.response.IntegralRes;
 import com.sulongfei.jump.response.Response;
+import com.sulongfei.jump.response.UserRes;
 import com.sulongfei.jump.rest.response.OrgResponse;
 import com.sulongfei.jump.rest.response.RestResponse;
 import com.sulongfei.jump.service.ClubService;
@@ -42,6 +46,8 @@ public class ClubServiceImpl implements ClubService {
     private RestService restService;
     @Autowired
     private ClubMapper clubMapper;
+    @Autowired
+    private IntegralMapper integralMapper;
 
     @Override
     @Cacheable(keyGenerator = "cacheKeyGenerator")
@@ -94,6 +100,22 @@ public class ClubServiceImpl implements ClubService {
             }
         }
         return new Response();
+    }
+
+    @Override
+    public Response rankList(ClubDTO dto) {
+        PageHelper.startPage(dto.getPage(), dto.getPageSize());
+        List<Integral> integrals = integralMapper.rankListTop(dto.getRemoteClubId());
+        List<IntegralRes> data = Lists.newArrayList();
+        integrals.forEach(integral -> {
+            IntegralRes integralRes = new IntegralRes();
+            UserRes userRes = new UserRes();
+            BeanUtils.copyProperties(integral.getUser(), userRes);
+            integralRes.setIntegral(integral.getIntegral());
+            integralRes.setUser(userRes);
+            data.add(integralRes);
+        });
+        return Response.toResponse(data, new PageInfo<>(integrals).getTotal());
     }
 
     private Club toClub(OrgResponse org, Club club) {

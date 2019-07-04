@@ -23,4 +23,14 @@ public class UserController {
     public Response userList(@RequestBody UserDTO dto){
         return userService.userList(dto);
     }
+
+    @PostMapping("/update")
+    public Response update(@RequestBody UserDTO dto){
+        return userService.update(dto);
+    }
+
+    @PostMapping("/ticketLog")
+    public Response ticketLog(@RequestBody UserDTO dto){
+        return userService.ticketLog(dto);
+    }
 }

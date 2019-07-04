@@ -16,4 +16,6 @@ public interface ClubService {
     Response localClubAll();
 
     Response synchronizeClubList();
+
+    Response rankList(ClubDTO dto);
 }

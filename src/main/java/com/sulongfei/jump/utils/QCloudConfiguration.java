@@ -29,8 +29,9 @@ public class QCloudConfiguration {
     private static final String secretId = "AKIDnbUJSPfXkmhT2SsZEm7HC0R6ZmkT4XO5";
     private static final String secretKey = "qU6YmhT3a4SbXHpyvlSxKZjkbFaprjTz";
     private static final String bucketName = "jump-images-1259462541";
+    private static final String regionName = "ap-shanghai";
     private static final COSCredentials cred = new BasicCOSCredentials(secretId, secretKey);
-    private static final ClientConfig clientConfig = new ClientConfig(new Region("ap-shanghai"));
+    private static final ClientConfig clientConfig = new ClientConfig(new Region(regionName));
     private static final COSClient cosClient = new COSClient(cred, clientConfig);
 
     /**
@@ -61,18 +62,22 @@ public class QCloudConfiguration {
     }
 
     /**
-     * 获得url链接
+     * 获得预签名URL
      *
      * @param key
      * @return
      */
-    public static String getUrl(String key) {
+    public static String getSignUrl(String key) {
         Date expiration = new Date(System.currentTimeMillis() + 3600L * 1000 * 24 * 365 * 10);
         GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(bucketName, key, HttpMethodName.GET);
         request.setExpiration(expiration);
         // 生成URL
         URL url = cosClient.generatePresignedUrl(request);
         return url == null ? "" : url.toString();
+    }
+
+    public static String getUrl(String key) {
+        return "https://" + bucketName + ".cos." + regionName + ".myqcloud.com/" + key;
     }
 
 

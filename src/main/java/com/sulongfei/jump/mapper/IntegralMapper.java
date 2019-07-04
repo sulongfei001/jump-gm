@@ -22,4 +22,5 @@ public interface IntegralMapper {
 
     int updateByPrimaryKey(Integral record);
 
+    List<Integral> rankListTop(Long remoteClubId);
 }

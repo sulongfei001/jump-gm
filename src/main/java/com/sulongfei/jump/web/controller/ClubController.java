@@ -3,7 +3,6 @@ package com.sulongfei.jump.web.controller;
 import com.sulongfei.jump.dto.ClubDTO;
 import com.sulongfei.jump.response.Response;
 import com.sulongfei.jump.service.ClubService;
-import com.sulongfei.jump.service.impl.ClubServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +30,11 @@ public class ClubController {
     @PostMapping("/local/all")
     public Response localClubAll() {
         return clubService.localClubAll();
+    }
+
+    @PostMapping("/rankList")
+    public Response rankList(@RequestBody ClubDTO dto) {
+        return clubService.rankList(dto);
     }
 
     @PostMapping("/synchronize")

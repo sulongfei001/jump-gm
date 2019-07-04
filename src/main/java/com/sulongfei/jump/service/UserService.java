@@ -12,4 +12,8 @@ import com.sulongfei.jump.response.Response;
  */
 public interface UserService {
     Response userList(UserDTO dto);
+
+    Response update(UserDTO dto);
+
+    Response ticketLog(UserDTO dto);
 }

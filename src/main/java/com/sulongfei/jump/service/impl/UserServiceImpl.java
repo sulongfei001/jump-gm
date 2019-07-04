@@ -5,7 +5,9 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.sulongfei.jump.dto.UserDTO;
 import com.sulongfei.jump.mapper.SecurityUserMapper;
+import com.sulongfei.jump.model.Record;
 import com.sulongfei.jump.model.SecurityUser;
+import com.sulongfei.jump.response.RecordRes;
 import com.sulongfei.jump.response.Response;
 import com.sulongfei.jump.response.UserRes;
 import com.sulongfei.jump.service.UserService;
@@ -42,5 +44,29 @@ public class UserServiceImpl implements UserService {
             data.add(res);
         });
         return Response.toResponse(data, new PageInfo<>(list).getTotal());
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public Response update(UserDTO dto) {
+        SecurityUser user = userMapper.selectByPrimaryKey(dto.getId());
+        user.setNickname(dto.getNickname());
+        user.setTicketNum(dto.getTicketNum());
+        userMapper.updateByPrimaryKey(user);
+        return null;
+    }
+
+    @Override
+    public Response ticketLog(UserDTO dto) {
+        PageHelper.startPage(dto.getPage(),dto.getPageSize());
+        List<Record> list = userMapper.selectRecord(dto.getId());
+        List<RecordRes> data = Lists.newArrayList();
+        list.forEach(record -> {
+            RecordRes res = new RecordRes();
+            BeanUtils.copyProperties(record,res);
+            data.add(res);
+        });
+        Long num = new PageInfo<>(list).getTotal();
+        return Response.toResponse(data,num);
     }
 }

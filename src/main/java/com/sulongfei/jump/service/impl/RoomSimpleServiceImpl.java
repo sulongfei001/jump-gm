@@ -9,9 +9,10 @@ import com.sulongfei.jump.mapper.RecordSimpleMapper;
 import com.sulongfei.jump.mapper.RoomSimpleMapper;
 import com.sulongfei.jump.model.RecordSimple;
 import com.sulongfei.jump.model.RoomSimple;
-import com.sulongfei.jump.response.RecordSimpleRes;
+import com.sulongfei.jump.response.RecordRes;
 import com.sulongfei.jump.response.Response;
 import com.sulongfei.jump.response.RoomSimpleRes;
+import com.sulongfei.jump.response.UserRes;
 import com.sulongfei.jump.service.RoomSimpleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,15 +99,16 @@ public class RoomSimpleServiceImpl implements RoomSimpleService {
     }
 
     @Override
-    @Cacheable(keyGenerator = "cacheKeyGenerator")
     public Response prizeList(RoomSimpleDTO dto) {
         PageHelper.startPage(dto.getPage(), dto.getPageSize());
         List<RecordSimple> list = recordSimpleMapper.selectByRoomId(dto.getId());
-        List<RecordSimpleRes> data = Lists.newArrayList();
+        List<RecordRes> data = Lists.newArrayList();
         list.forEach(recordSimple -> {
-            RecordSimpleRes res = new RecordSimpleRes();
+            RecordRes res = new RecordRes();
             BeanUtils.copyProperties(recordSimple, res);
-            res.setUserName(recordSimple.getUser().getNickname());
+            UserRes user = new UserRes();
+            BeanUtils.copyProperties(recordSimple.getUser(), user);
+            res.setUser(user);
             data.add(res);
         });
         return Response.toResponse(data, new PageInfo<>(list).getTotal());
@@ -124,11 +126,13 @@ public class RoomSimpleServiceImpl implements RoomSimpleService {
     public Response historyTicket(RoomSimpleDTO dto) {
         PageHelper.startPage(dto.getPage(), dto.getPageSize());
         List<RecordSimple> list = recordSimpleMapper.historyTicket(dto.getId());
-        List<RecordSimpleRes> data = Lists.newArrayList();
+        List<RecordRes> data = Lists.newArrayList();
         list.forEach(recordSimple -> {
-            RecordSimpleRes res = new RecordSimpleRes();
+            RecordRes res = new RecordRes();
             BeanUtils.copyProperties(recordSimple, res);
-            res.setUserName(recordSimple.getUser().getNickname());
+            UserRes user = new UserRes();
+            BeanUtils.copyProperties(recordSimple.getUser(), user);
+            res.setUser(user);
             data.add(res);
         });
         return Response.toResponse(data, new PageInfo<>(list).getTotal());

@@ -1,5 +1,6 @@
 package com.sulongfei.jump.mapper;
 
+import com.sulongfei.jump.model.Record;
 import com.sulongfei.jump.model.SecurityUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -25,4 +26,6 @@ public interface SecurityUserMapper {
     SecurityUser selectByUsername(String userName);
 
     List<SecurityUser> selectByPage(@Param("id") Long id,@Param("phoneNumber") String phoneNumber);
+
+    List<Record> selectRecord(Long userId);
 }

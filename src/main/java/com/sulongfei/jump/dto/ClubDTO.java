@@ -15,4 +15,6 @@ import lombok.EqualsAndHashCode;
 public class ClubDTO extends BaseDTO {
 
     private static final long serialVersionUID = 6970777365267346974L;
+
+    private Long remoteClubId;
 }
