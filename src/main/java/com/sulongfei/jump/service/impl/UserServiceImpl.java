@@ -5,8 +5,10 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.sulongfei.jump.dto.UserDTO;
 import com.sulongfei.jump.mapper.SecurityUserMapper;
+import com.sulongfei.jump.mapper.TicketMapper;
 import com.sulongfei.jump.model.Record;
 import com.sulongfei.jump.model.SecurityUser;
+import com.sulongfei.jump.model.Ticket;
 import com.sulongfei.jump.response.RecordRes;
 import com.sulongfei.jump.response.Response;
 import com.sulongfei.jump.response.UserRes;
@@ -32,6 +34,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private SecurityUserMapper userMapper;
+    @Autowired
+    private TicketMapper ticketMapper;
 
     @Override
     public Response userList(UserDTO dto) {
@@ -51,7 +55,6 @@ public class UserServiceImpl implements UserService {
     public Response update(UserDTO dto) {
         SecurityUser user = userMapper.selectByPrimaryKey(dto.getId());
         user.setNickname(dto.getNickname());
-        user.setTicketNum(dto.getTicketNum());
         userMapper.updateByPrimaryKey(user);
         return null;
     }
