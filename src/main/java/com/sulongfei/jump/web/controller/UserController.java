@@ -1,5 +1,6 @@
 package com.sulongfei.jump.web.controller;
 
+import com.sulongfei.jump.dto.TicketDTO;
 import com.sulongfei.jump.dto.UserDTO;
 import com.sulongfei.jump.response.Response;
 import com.sulongfei.jump.service.UserService;
@@ -32,5 +33,20 @@ public class UserController {
     @PostMapping("/ticketLog")
     public Response ticketLog(@RequestBody UserDTO dto){
         return userService.ticketLog(dto);
+    }
+
+    @PostMapping("/ticketList")
+    public Response ticketList(@RequestBody TicketDTO dto){
+        return userService.ticketList(dto);
+    }
+
+    @PostMapping("/oneTicket")
+    public Response oneTicket(@RequestBody TicketDTO dto){
+        return userService.oneTicket(dto);
+    }
+
+    @PostMapping("/modifyTicket")
+    public Response modifyTicket(@RequestBody TicketDTO dto){
+        return userService.modifyTicket(dto);
     }
 }

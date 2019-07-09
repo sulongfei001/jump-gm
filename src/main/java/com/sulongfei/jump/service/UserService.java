@@ -1,5 +1,6 @@
 package com.sulongfei.jump.service;
 
+import com.sulongfei.jump.dto.TicketDTO;
 import com.sulongfei.jump.dto.UserDTO;
 import com.sulongfei.jump.response.Response;
 
@@ -16,4 +17,10 @@ public interface UserService {
     Response update(UserDTO dto);
 
     Response ticketLog(UserDTO dto);
+
+    Response ticketList(TicketDTO dto);
+
+    Response oneTicket(TicketDTO dto);
+
+    Response modifyTicket(TicketDTO dto);
 }

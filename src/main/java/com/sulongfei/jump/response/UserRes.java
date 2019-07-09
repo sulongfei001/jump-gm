@@ -53,6 +53,4 @@ public class UserRes {
 
     private Boolean everydayTicket;
 
-    private Integer ticketNum;
-
 }
