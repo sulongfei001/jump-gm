@@ -7,13 +7,14 @@ import lombok.EqualsAndHashCode;
  * 〈〉
  *
  * @Author sulongfei
- * @Date 2019/7/1 10:33
+ * @Date 2019/7/11 17:27
  * @Version 1.0
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class UserDTO extends BaseDTO {
-    private String phoneNumber;
-    private String nickname;
-    private Boolean deleteStatus;
+public class OrderDTO extends BaseDTO {
+    private Long remoteClubId;
+    private Long swOrderId;
+    private Byte result;
+    private Long userId;
 }

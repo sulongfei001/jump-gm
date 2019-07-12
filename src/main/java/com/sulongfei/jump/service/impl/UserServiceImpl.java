@@ -1,5 +1,6 @@
 package com.sulongfei.jump.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
@@ -22,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -60,7 +62,8 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = false)
     public Response update(UserDTO dto) {
         SecurityUser user = userMapper.selectByPrimaryKey(dto.getId());
-        user.setNickname(dto.getNickname());
+        if (!StrUtil.isEmpty(dto.getNickname())) user.setNickname(dto.getNickname());
+        if (!ObjectUtils.isEmpty(dto.getDeleteStatus())) user.setDeleteStatus(dto.getDeleteStatus());
         userMapper.updateByPrimaryKey(user);
         return null;
     }
@@ -104,7 +107,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = false)
     public Response modifyTicket(TicketDTO dto) {
-        Ticket ticket = ticketMapper.selectByClubId(dto.getUserId(),dto.getRemoteClubId());
+        Ticket ticket = ticketMapper.selectByClubId(dto.getUserId(), dto.getRemoteClubId());
         ticket.setNum(dto.getNum());
         ticketMapper.updateByPrimaryKey(ticket);
         return new Response();

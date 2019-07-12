@@ -188,6 +188,7 @@
                 and remote_club_id = #{remoteClubId,jdbcType=BIGINT}
             </if>
         </where>
+        order by remote_club_id asc, status asc, create_time asc
     </select>
 
 </mapper>

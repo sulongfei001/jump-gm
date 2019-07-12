@@ -269,12 +269,6 @@
   </update>
 
 
-    <select id="selectByUsername" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from security_user
-        where phone_number = #{username,jdbcType=VARCHAR}
-    </select>
     <select id="selectByPage" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

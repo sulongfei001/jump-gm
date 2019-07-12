@@ -23,9 +23,7 @@ public interface SecurityUserMapper {
 
     int updateByPrimaryKey(SecurityUser record);
 
-    SecurityUser selectByUsername(String userName);
-
-    List<SecurityUser> selectByPage(@Param("id") Long id,@Param("phoneNumber") String phoneNumber);
+    List<SecurityUser> selectByPage(@Param("id") Long id, @Param("phoneNumber") String phoneNumber);
 
     List<Record> selectRecord(Long userId);
 }
