@@ -1,6 +1,6 @@
 package com.sulongfei.jump.web.controller;
 
-import com.sulongfei.jump.dto.SpreadGoodsDTO;
+import com.sulongfei.jump.dto.GoodsDTO;
 import com.sulongfei.jump.response.Response;
 import com.sulongfei.jump.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +20,12 @@ public class GoodsController {
     private GoodsService goodsService;
 
     @PostMapping("/local/list")
-    public Response localGoodsList(@RequestBody SpreadGoodsDTO dto) {
+    public Response localGoodsList(@RequestBody GoodsDTO dto) {
         return goodsService.localGoodsList(dto);
     }
 
     @PostMapping("/local/all")
-    public Response localGoodsAll(@RequestBody SpreadGoodsDTO dto) {
+    public Response localGoodsAll(@RequestBody GoodsDTO dto) {
         return goodsService.localGoodsAll(dto);
     }
 
@@ -35,7 +35,7 @@ public class GoodsController {
     }
 
     @PostMapping("/spread/list")
-    public Response spreadGoodsList(@RequestBody SpreadGoodsDTO dto) {
+    public Response spreadGoodsList(@RequestBody GoodsDTO dto) {
         return goodsService.spreadGoodsList(dto);
     }
 
@@ -45,12 +45,17 @@ public class GoodsController {
     }
 
     @PostMapping("/spread/create")
-    public Response createSpreadGoods(@RequestBody SpreadGoodsDTO dto) {
+    public Response createSpreadGoods(@RequestBody GoodsDTO dto) {
         return goodsService.createSpreadGoods(dto);
     }
 
     @PutMapping("/spread/update")
-    public Response updateSpreadGoods(@RequestBody SpreadGoodsDTO dto) {
+    public Response updateSpreadGoods(@RequestBody GoodsDTO dto) {
         return goodsService.updateSpreadGoods(dto);
+    }
+
+    @PutMapping("/local/update")
+    public Response updateGoods(@RequestBody GoodsDTO dto){
+        return goodsService.updateGoods(dto);
     }
 }

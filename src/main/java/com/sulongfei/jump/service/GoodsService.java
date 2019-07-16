@@ -1,20 +1,22 @@
 package com.sulongfei.jump.service;
 
-import com.sulongfei.jump.dto.SpreadGoodsDTO;
+import com.sulongfei.jump.dto.GoodsDTO;
 import com.sulongfei.jump.response.Response;
 
 public interface GoodsService {
     Response synchronizeGoodsList();
 
-    Response createSpreadGoods(SpreadGoodsDTO goodsDTO);
+    Response createSpreadGoods(GoodsDTO goodsDTO);
 
-    Response spreadGoodsList(SpreadGoodsDTO goodsDTO);
+    Response spreadGoodsList(GoodsDTO goodsDTO);
 
-    Response localGoodsList(SpreadGoodsDTO goodsDTO);
+    Response localGoodsList(GoodsDTO goodsDTO);
 
-    Response localGoodsAll(SpreadGoodsDTO goodsDTO);
+    Response localGoodsAll(GoodsDTO goodsDTO);
 
     Response getSpreadGoods(long id);
 
-    Response updateSpreadGoods(SpreadGoodsDTO dto);
+    Response updateSpreadGoods(GoodsDTO dto);
+
+    Response updateGoods(GoodsDTO dto);
 }

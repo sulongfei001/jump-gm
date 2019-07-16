@@ -14,7 +14,7 @@ import java.math.BigDecimal;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SpreadGoodsDTO extends BaseDTO {
+public class GoodsDTO extends BaseDTO {
 
     private static final long serialVersionUID = 5842373100692301564L;
 

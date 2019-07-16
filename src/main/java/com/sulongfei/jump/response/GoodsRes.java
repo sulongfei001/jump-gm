@@ -35,4 +35,6 @@ public class GoodsRes {
 
     private Integer remainNum;
 
+    private String goodsText;
+
 }

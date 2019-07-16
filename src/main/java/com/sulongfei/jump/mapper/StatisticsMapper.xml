@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sulongfei.jump.mapper.StatisticsMapper">
+
+    <select id="registerStatistics" parameterType="com.sulongfei.jump.dto.StatisticsDTO" resultType="java.lang.Integer">
+        SELECT
+        COUNT( * )
+        FROM
+        security_user
+        WHERE
+        DATE( create_time ) &gt;=  #{startTime,jdbcType=TIMESTAMP}
+        AND DATE ( create_time ) &lt;=  #{endTime,jdbcType=TIMESTAMP}
+        GROUP BY
+        DATE( create_time )
+    </select>
+</mapper>
