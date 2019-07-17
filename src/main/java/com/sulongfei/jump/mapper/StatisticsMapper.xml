@@ -3,14 +3,94 @@
 <mapper namespace="com.sulongfei.jump.mapper.StatisticsMapper">
 
     <select id="registerStatistics" parameterType="com.sulongfei.jump.dto.StatisticsDTO" resultType="java.lang.Integer">
+        SELECT COALESCE
+        ( t2.num, 0 ) AS num
+        FROM
+        ( SELECT date FROM calendar WHERE DATE( date ) &gt;= #{startTime,jdbcType=TIMESTAMP} AND DATE ( date ) &lt;=
+        #{endTime,jdbcType=TIMESTAMP} ) t1
+        LEFT JOIN (
         SELECT
-        COUNT( * )
+        DATE( create_time ) AS date,
+        COUNT( * ) AS num
+        FROM
+        security_user
+        WHERE DATE( create_time ) &gt;= #{startTime,jdbcType=TIMESTAMP} AND DATE ( create_time ) &lt;=
+        #{endTime,jdbcType=TIMESTAMP}
+        <if test="remoteClubIds != null and remoteClubIds.size()>0">
+            AND register_clue IN
+            <foreach collection="remoteClubIds" item="item" index="index" separator="," open="(" close=")">
+                #{item,jdbcType=BIGINT}
+            </foreach>
+        </if>
+        GROUP BY
+        DATE( create_time )
+        ) t2 ON t1.date = t2.date
+        ORDER BY t1.date
+    </select>
+    <select id="chargeStatistics" parameterType="com.sulongfei.jump.dto.StatisticsDTO" resultType="java.lang.Integer">
+        SELECT COALESCE
+        ( t2.num, 0 ) AS num
+        FROM
+        ( SELECT date FROM calendar WHERE DATE( date ) &gt;= #{startTime,jdbcType=TIMESTAMP} AND DATE ( date ) &lt;=
+        #{endTime,jdbcType=TIMESTAMP} ) t1
+        LEFT JOIN (
+        SELECT
+        DATE( buy_time ) AS date,
+        COUNT( distinct user_id ) AS num
+        FROM
+        payment_order
+        WHERE result = 1 AND DATE( buy_time ) &gt;= #{startTime,jdbcType=TIMESTAMP} AND DATE ( buy_time ) &lt;=
+        #{endTime,jdbcType=TIMESTAMP}
+        <if test="remoteClubIds != null and remoteClubIds.size()>0">
+            AND org_id IN
+            <foreach collection="remoteClubIds" item="item" index="index" separator="," open="(" close=")">
+                #{item,jdbcType=BIGINT}
+            </foreach>
+        </if>
+        GROUP BY
+        DATE( buy_time )
+        ) t2 ON t1.date = t2.date
+        ORDER BY t1.date
+    </select>
+    <select id="registerCount" parameterType="com.sulongfei.jump.dto.StatisticsDTO" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
         FROM
         security_user
         WHERE
-        DATE( create_time ) &gt;=  #{startTime,jdbcType=TIMESTAMP}
-        AND DATE ( create_time ) &lt;=  #{endTime,jdbcType=TIMESTAMP}
-        GROUP BY
-        DATE( create_time )
+        date( create_time ) = CURDATE()
+        <if test="remoteClubIds != null and remoteClubIds.size()>0">
+            AND register_clue IN
+            <foreach collection="remoteClubIds" item="item" index="index" separator="," open="(" close=")">
+                #{item,jdbcType=BIGINT}
+            </foreach>
+        </if>
+    </select>
+    <select id="chargeCount" parameterType="com.sulongfei.jump.dto.StatisticsDTO" resultType="java.math.BigDecimal">
+        SELECT
+        COALESCE(sum(price),0) AS COUNT
+        FROM
+        payment_order
+        WHERE
+        date( buy_time ) = CURDATE() AND result = 1
+        <if test="remoteClubIds != null and remoteClubIds.size()>0">
+            AND org_id IN
+            <foreach collection="remoteClubIds" item="item" index="index" separator="," open="(" close=")">
+                #{item,jdbcType=BIGINT}
+            </foreach>
+        </if>
+    </select>
+    <select id="chargePeople" parameterType="com.sulongfei.jump.dto.StatisticsDTO" resultType="java.lang.Integer">
+        SELECT
+        count( DISTINCT user_id )
+        FROM
+        payment_order
+        WHERE date( buy_time ) = CURDATE( ) AND result = 1
+        <if test="remoteClubIds != null and remoteClubIds.size()>0">
+            AND org_id IN
+            <foreach collection="remoteClubIds" item="item" index="index" separator="," open="(" close=")">
+                #{item,jdbcType=BIGINT}
+            </foreach>
+        </if>
     </select>
 </mapper>

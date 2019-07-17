@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -33,14 +35,23 @@ public class StatisticsServiceImpl implements StatisticsService {
     public Response lineChart(StatisticsDTO dto) {
         StatisticsRes data = new StatisticsRes();
         List<Integer> registerData = statisticsMapper.registerStatistics(dto);
+        List<Integer> chargeData = statisticsMapper.chargeStatistics(dto);
+        Integer registerCount = statisticsMapper.registerCount(dto);
+        BigDecimal chargeCount = statisticsMapper.chargeCount(dto);
+        Integer chargePeople = statisticsMapper.chargePeople(dto);
         List<Date> xAxisData = getBetweenDates(dto.getStartTime(), dto.getEndTime());
         data.setRegisterData(registerData);
+        data.setChargeData(chargeData);
         data.setXaxisData(xAxisData);
+        data.setRegisterCount(registerCount);
+        data.setChargeCount(chargeCount);
+        data.setChargePeople(chargePeople);
         return new Response(data);
     }
 
     private List<Date> getBetweenDates(Date start, Date end) {
         List<Date> result = Lists.newArrayList();
+        if (ObjectUtils.isEmpty(start) || ObjectUtils.isEmpty(end)) return result;
         Calendar tempStart = Calendar.getInstance();
         tempStart.setTime(start);
         tempStart.add(Calendar.DAY_OF_YEAR, 1);

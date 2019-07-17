@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 〈〉
@@ -18,4 +19,5 @@ public class StatisticsDTO {
     private Date startTime;
     @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
     private Date endTime;
+    private List<Long> remoteClubIds;
 }
